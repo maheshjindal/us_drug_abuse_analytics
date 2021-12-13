@@ -14,7 +14,7 @@ We looked and explored for other data sources as well. There is no source which 
   - Issue: The data in this dataset were in form of 3000 questions. Each question was represented by a column in the dataset. As we had limited span, we could not use this as our dataset as we would have to undersatnd all the 3000 questions to make use of this dataset.
 
 2. CDC (Center for Disease Control) Underlying causes of death data (https://wonder.cdc.gov/controller/datarequest/D76). 
- - Issue: This data did not have a lot of variables and we would not be able to understand the underlying trends between demographics and drug abuse.
+  - Issue: This data did not have a lot of variables and we would not be able to understand the underlying trends between demographics and drug abuse.
 
 ## Data Description
 
