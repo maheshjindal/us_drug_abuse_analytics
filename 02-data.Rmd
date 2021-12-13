@@ -1,2 +1,25 @@
 # Data sources
 
+The data set used for the project are:
+
+1. https://www.datafiles.samhsa.gov/dataset/treatment-episode-data-set-admissions-2000-2019-teds-2000-2019-ds0001. This data was published by the U.S. department of Health & Human services and can be found under Substance Abuse & Mental Health Data Archive. It contains data about people admitted to hospitals in various states due to alcohol/drug overdose. This data serves as a good proxy to understand the underlying trends of drug abuse.
+
+2. https://www2.census.gov/programs-surveys/popest/datasets/2010/2010-eval-estimates/sc-est2010-alldata5.csv. This data was published by the United states census Bureau. This contains information about each states population across various dimensions such as age, gender, race. The data is from 2000 to 2010.
+
+3.  https://www2.census.gov/programs-surveys/popest/datasets/2010/2010-eval-estimates/sc-est2010-alldata5.csv. This data was published by the United states census Bureau. This contains information about each states population across various dimensions such as age, gender, race. The data is from 2010 to 2020.
+
+
+## Data Description
+
+All the data collected was given in the csv format. 
+
+The treatment dataset initially contained 37558015 rows and 62 columns. After the preprocessing it got reduced to . To understand the data transformation done to achieve this. Please click here. The data dictionary along with an understanding of variables can be found [here](https://www.datafiles.samhsa.gov/sites/default/files/field-uploads-protected/studies/TEDS-A-2000-2019/TEDS-A-2000-2019-datasets/TEDS-A-2000-2019-DS0001/TEDS-A-2000-2019-DS0001-info/TEDS-A-2000-2019-DS0001-info-codebook_v1.pdf).
+
+The combined population data contained 394740 rows and 21 columns. The data dictionary along with an understanding of variables can be found [here](https://www2.census.gov/programs-surveys/popest/technical-documentation/file-layouts/2000-2010/sc-est2010-alldata6.pdf).
+
+
+## Issues with the data
+
+1. The treatment data does not contain data about all admissions. It is a huge dataset and is meant to be used to understand the characteristics of the substance abuse, form hypothesis and understand the underlying trends.
+2. Some of the data have missing values. But fortunately due to abundance of data, we can ignore these rows and move ahead with rows that have data. Though, this strategy does not work for columns with huge amount of missing data and these are kept as it is in our analysis.
+3. Because the size is data is enormous, it takes a lot of time to preprocess the data. We cannot directly work with delimited data but had to convert file to feather format to ensure quick reading and writing of files.
