@@ -1,1 +1,303 @@
 # Results
+```{r}
+library("rjson")
+library("dplyr")
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(choroplethr)
+library(statebins)
+library(maps)
+library(ggrepel)
+library(reshape2)
+library(viridis)
+library(ggthemes)
+library(gapminder)
+library(gganimate)
+```
+
+```{r read_data}
+load("data/tedsa_puf_2000_2019.RData")
+final_population_data <- read.csv("data/population_data.csv")
+```
+
+
+```{r n,fig.height = 8,fig.width = 10}
+cases_per_year_for_a_drug <-
+  dataset %>% group_by(`ADMYR`, `SUB1`) %>% summarise(Total_cases = sum(`count`))
+
+population_per_year <-
+  final_population_data %>% group_by(ADMYR) %>% summarise(Total_population = sum(`Population_count`))
+
+cases_per_year_for_a_drug <-
+  merge(cases_per_year_for_a_drug, population_per_year, by = "ADMYR")
+
+cases_per_year_for_a_drug$Proportion_of_cases <-
+  cases_per_year_for_a_drug$Total_cases / cases_per_year_for_a_drug$Total_population
+
+ggplot(cases_per_year_for_a_drug) +
+  aes(
+    x = ADMYR,
+    y = Proportion_of_cases,
+    group = SUB1,
+    color = SUB1
+  ) +
+  geom_line() +
+  scale_fill_hue(direction = 1) + scale_y_continuous(
+    labels = function(x)
+      format(x, scientific = FALSE)
+  ) +
+  theme_bw()
+
+```
+Observations:
+
+1. There seems to be a sharp increase in the number of people admitted due to Heroin after 2010. On the other end, patients admitted due to alcohol and cocaine overdose seems to have decreased sharply after 2009 and 2006 respectively.
+
+2. Methamphetamine also seems to be on the rise, though the increase is not as sharp.
+
+We need to see what has to to an increase in the cases of Heroin & Methamphetamine admission. Possible Hypothesis:
+
+1. People consuming alcohol or cocaine might be consuming heroin now.
+2. The demographics of the consumption might have changed over time.
+3. The expenses required for the hospital might have increased for alcohol and cocaine and people due to report it except in cases of emergency.
+
+```{r }
+
+dataset %>% ggplot() 
++ aes(x = FREQ1, fill = GENDER) 
++ geom_histogram(alpha =0.3,
+                 stat = "count",
+                 position = "identity") 
++ theme_bw()
+
+```
+
+```{r fig.height = 8,fig.width = 10}
+cases_per_year_for_a_region_and_drug <- dataset %>% group_by(ADMYR,SUB1,REGION) %>% summarise(Total_cases = sum(`count`))
+
+population_per_year_for_a_region <- final_population_data %>% group_by(ADMYR,REGION) %>% summarise(Total_population = sum(`Population_count`))
+
+cases_per_year_for_a_region_and_drug <- merge(cases_per_year_for_a_region_and_drug,population_per_year_for_a_region,by=c("ADMYR","REGION"))
+
+cases_per_year_for_a_region_and_drug$Proportion_of_cases <- cases_per_year_for_a_region_and_drug$Total_cases/cases_per_year_for_a_region_and_drug$Total_population
+
+ggplot(cases_per_year_for_a_region_and_drug) +
+ aes(x = ADMYR, y = Proportion_of_cases, color = SUB1,group = SUB1) + facet_wrap(~REGION)+
+ geom_line() +
+ scale_fill_hue(direction = 1) + scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
+ theme_bw()
+```
+Observations:
+
+1. The trend of admission to hospitals due to Heroin consumption has increased sharply for the Northeast and south region and increased steadly for the Midwest region. Surprisingly, for the West region, the trend seems to be constant/decreasing.
+ - We need to look at the differences in the demographics of each region to understand this variability in the data
+ 
+2. Admission due to Methamphetamine seems to on an increasing trend in South and Midwest. The trend is constant for the Northeast.
+
+3. Out of all the regions, the West region seems to be performing the best as the trend of all the drugs (including alcohol) seems to be decreasing over the years.
+  - What is the difference here? Is it demographics or policies adopted by government? Is it because there is less awareness and people don't get admitted to hospital?
+
+
+```{r fig.height = 10,fig.width = 10,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
+cases_per_year_for_a_region_and_state_drug <-
+  dataset %>% group_by(ADMYR, SUB1, REGION, STFIPS) %>% summarise(Total_cases = sum(`count`))
+
+cases_per_year_for_a_region_and_state_drug %>% mutate(Year = ADMYR)
+
+cases_per_year_for_a_region_and_state_drug <-
+  cases_per_year_for_a_region_and_state_drug %>% mutate(
+    Year = case_when(
+      ADMYR %in% c('2000', '2001', '2002', '2003', '2004') ~ "2000-2004",
+      ADMYR %in% c('2005', '2006', '2007', '2008', '2009') ~ "2004-2009",
+      ADMYR %in% c('2010', '2011', '2012', '2013', '2014') ~ "2010-2014",
+      ADMYR %in% c('2015', '2016', '2017', '2018', '2019') ~ "2015-2019"
+    )
+  )
+
+population_per_year_for_a_region_and_state <-
+  final_population_data %>% group_by(ADMYR, REGION, STFIPS) %>% summarise(Total_population = sum(`Population_count`))
+
+cases_per_year_for_a_region_and_state_drug <-
+  merge(
+    cases_per_year_for_a_region_and_state_drug,
+    population_per_year_for_a_region_and_state,
+    by = c("ADMYR", "REGION", "STFIPS")
+  )
+
+cases_per_year_for_a_region_and_state_drug$Proportion_of_cases <-
+  cases_per_year_for_a_region_and_state_drug$Total_cases / cases_per_year_for_a_region_and_state_drug$Total_population
+
+cases_per_year_for_a_region_and_state_drug %>%
+  mutate(state = STFIPS) %>%
+  filter(SUB1 == 'Heroin') %>%
+  group_by(Year, state) %>%
+  summarise(value = mean(Proportion_of_cases), .groups = 'drop') %>%
+  ggplot(aes(state = state, fill = value)) + geom_statebins() + facet_wrap( ~
+                                                                              Year)
+  
+```
+
+
+
+
+```{r fig.height = 10,fig.width = 10,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
+
+
+data("state_tbl")
+names(state_tbl)[2] <- 'STFIPS'
+cases_per_year_for_a_region_and_state_drug <-
+  merge(x = cases_per_year_for_a_region_and_state_drug,
+        y = state_tbl,
+        by = "STFIPS",
+        all.x = TRUE)
+
+ggplot(data = cases_per_year_for_a_region_and_state_drug[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'), ],
+       mapping = aes(x = ADMYR, y = Proportion_of_cases)) +
+  geom_line(color = "gray70", mapping = aes(group = STFIPS)) +
+  geom_smooth(mapping = aes(group = REGION), se = FALSE) +
+  geom_text_repel(
+    data = subset(cases_per_year_for_a_region_and_state_drug[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'), ], ADMYR == '2019'),
+    mapping = aes(x = ADMYR, y = Proportion_of_cases, label = abbrev),
+    size = 3,
+    segment.color = NA,
+    nudge_x = 30
+  ) + facet_wrap( ~ REGION, nrow  = 3) + theme_bw()
+
+```
+```{r fig.height=8, fig.width=6}
+
+dataset %>% ggplot() + aes(x = SERVICES, fill = SUB1)
++ geom_histogram(alpha =0.3,
+                 stat = "count",
+                 position = "dodge") 
++ theme_bw() 
++ theme(
+    axis.text.x = element_text(angle = 60, vjust = 0.5),
+    plot.title = element_text(hjust = 0.5, size = 10)
+                 ) 
++ facet_wrap(~ REGION)
+
+```
+
+```{r fig.height = 10,fig.width = 10,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
+
+ggplot(data = cases_per_year_for_a_region_and_state_drug[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Methamphetamine'), ],
+       mapping = aes(x = ADMYR, y = Proportion_of_cases)) +
+  geom_line(color = "gray70", mapping = aes(group = STFIPS)) +
+  geom_smooth(mapping = aes(group = REGION), se = FALSE) +
+  geom_text_repel(
+    data = subset(cases_per_year_for_a_region_and_state_drug[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'), ], ADMYR == '2019'),
+    mapping = aes(x = ADMYR, y = Proportion_of_cases, label = abbrev),
+    size = 3,
+    segment.color = NA,
+    nudge_x = 30
+  ) + facet_wrap( ~ REGION, nrow  = 3) + theme_bw()
+
+```
+
+```{r fig.height = 10,fig.width = 10,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
+cases_per_year_for_a_region_and_state_and_gender_drug <-
+  dataset %>% group_by(ADMYR, SUB1, REGION, STFIPS, GENDER) %>% summarise(Total_cases = sum(`count`))
+
+population_per_year_for_a_region_and_state_and_gender <-
+  final_population_data %>% group_by(ADMYR, REGION, STFIPS, GENDER) %>% summarise(Total_population = sum(`Population_count`))
+
+cases_per_year_for_a_region_and_state_and_gender_drug <-
+  merge(
+    cases_per_year_for_a_region_and_state_and_gender_drug,
+    population_per_year_for_a_region_and_state_and_gender,
+    by = c("ADMYR", "REGION", "STFIPS", "GENDER")
+  )
+
+cases_per_year_for_a_region_and_state_and_gender_drug$Proportion_of_cases <-
+  cases_per_year_for_a_region_and_state_and_gender_drug$Total_cases / cases_per_year_for_a_region_and_state_and_gender_drug$Total_population
+
+
+df_filtered_cases_per_year_for_a_region_and_state_and_gender_drug <-
+  cases_per_year_for_a_region_and_state_and_gender_drug %>% filter(SUB1 == 'Heroin') %>%  filter(ADMYR %in% c("2014", "2015", "2016", "2017", "2018", "2019")) %>% filter(REGION == 'South')
+
+
+ggplot(
+  df_filtered_cases_per_year_for_a_region_and_state_and_gender_drug,
+  aes(x = STFIPS , y = Proportion_of_cases, fill = GENDER)
+) + geom_bar(stat = "identity",
+             width = .6,
+             position = "dodge")    + scale_y_continuous(breaks = seq(-100, 100, 10), labels =
+                                                           abs(seq(-100, 100, 10))) +
+  coord_flip() +   facet_wrap( ~ ADMYR)
+
+```
+
+```{r fig.height = 8,fig.width = 8,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
+cases_per_year_for_a_region_and_state_and_gender_race_drug <-
+  dataset %>% group_by(ADMYR, SUB1, REGION, STFIPS, GENDER, RACE) %>% summarise(Total_cases = sum(`count`))
+
+population_per_year_for_a_region_and_state_and_gender_race <-
+  final_population_data %>% group_by(ADMYR, REGION, STFIPS, GENDER, RACE) %>% summarise(Total_population = sum(`Population_count`))
+
+cases_per_year_for_a_region_and_state_and_gender_race_drug <-
+  merge(
+    cases_per_year_for_a_region_and_state_and_gender_race_drug,
+    population_per_year_for_a_region_and_state_and_gender_race,
+    by = c("ADMYR", "REGION", "STFIPS", "GENDER", "RACE")
+  )
+
+cases_per_year_for_a_region_and_state_and_gender_race_drug$Proportion_of_cases <-
+  cases_per_year_for_a_region_and_state_and_gender_race_drug$Total_cases /
+  cases_per_year_for_a_region_and_state_and_gender_race_drug$Total_population
+
+gg <-
+  ggplot(
+    cases_per_year_for_a_region_and_state_and_gender_race_drug,
+    aes(x = ADMYR, y = STFIPS, fill = Proportion_of_cases)
+  )
+gg <- gg + geom_tile(color = "white", size = 0.1)
+gg <-
+  gg + scale_fill_viridis(name = "Propotion of Cases", option = "magma")
+gg <- gg + coord_equal()
+gg <- gg + facet_wrap( ~ RACE, ncol = 2)
+gg <-
+  gg + labs(x = NULL, y = NULL, title = "Propotion per State and Year for a particular Race")
+gg <- gg + theme_tufte(base_family = "Helvetica")
+gg <- gg + theme(axis.ticks = element_blank())
+gg <- gg + theme(axis.text = element_text(size = 5))
+gg <- gg + theme(panel.border = element_blank())
+gg <- gg + theme(plot.title = element_text(hjust = 0))
+gg <- gg + theme(strip.text = element_text(hjust = 0))
+gg <- gg + theme(panel.margin.x = unit(0.5, "cm"))
+gg <- gg + theme(panel.margin.y = unit(0.5, "cm"))
+gg <- gg + theme(legend.title = element_text(size = 6))
+gg <- gg + theme(legend.title.align = 1)
+gg <- gg + theme(legend.text = element_text(size = 6))
+gg <- gg + theme(legend.position = "bottom")
+gg <- gg + theme(legend.key.size = unit(0.2, "cm"))
+gg <- gg + theme(legend.key.width = unit(1, "cm"))
+gg <-
+  gg + theme(
+    axis.text = element_text(size = 12),
+    axis.text.x = element_text(angle = 60, vjust = 0.5),
+    plot.title = element_text(hjust = 0.5, size = 20),
+    strip.text = element_text(size = 13),
+    legend.key.width = unit(2.5, "cm"),
+    legend.key.height = unit(1.5, "cm"),
+    legend.key.size = unit(0.8, "cm")
+  )
+
+gg
+
+```
+
+```{r fig.height = 10,fig.width = 20,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
+dataset_sub_filtered_edu_employ <- dataset %>% group_by(ADMYR,AGE,SUB1,REGION,STFIPS,GENDER,RACE,EDUC,EMPLOY) %>% summarise(Total_cases = sum(`count`))
+
+population_grouped_data <- final_population_data %>% group_by(ADMYR,REGION,STFIPS,GENDER,RACE) %>% summarise(Total_population = sum(`Population_count`))
+
+tmpds <- merge(dataset_sub_filtered_edu_employ,population_grouped_data,by=c("ADMYR","REGION","STFIPS","GENDER","RACE"),all.x=TRUE)
+
+dataset_sub_filtered_edu_employ$Proportion_of_cases <- dataset_sub_filtered_edu_employ$Total_cases/tmpds$Total_population
+
+ggplot(data = dataset_sub_filtered_edu_employ) + geom_mosaic(aes(x=product(SUB1,EDUC), fill = AGE), divider=ddecker()) + scale_alpha_manual(values =c(.7,.9)) + theme(axis.text=element_text(size=12),axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5),plot.title = element_text(hjust = 0.5,size=20), strip.text = element_text(size=13), legend.key.width = unit(2.5, "cm"),legend.key.height = unit(1.5, "cm"), legend.key.size = unit(0.8, "cm")) + labs(x=NULL, y=NULL, title="Impact of Education and Age on the Drugs")+  theme_hc()
+
+```
