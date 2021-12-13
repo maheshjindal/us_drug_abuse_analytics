@@ -19,9 +19,9 @@ library(rjson)
 tedsa_puf_2000_2019 <- read.csv("data/tedsa_puf_2000_2019.csv")
 ```
 
-## Subsetting the data
+## Treatment data
 
-### Treatment data
+Steps followed for cleaning the Treatment data:
 
 1. There are too many variables recorded in the dataset. We picked a few important ones for our analysis. We chose 12 important variables. They are: 'AGE', 'ADMYR' (Year), 'GENDER', 'RACE', 'EDUC' (Education), 'STFIPS' (States), 'REGION', 'DIVISION','SERVICES' (Treatment), 'SUB1' (Substance consumed), 'ROUTE1' (How it was consumed), 'FREQ1' (Frequency of consumption).
 
@@ -160,7 +160,9 @@ save(tedsa_puf_2000_2019, file = "data/tedsa_puf_2000_2019_final_cleaned.RData")
 ```
 
 
-### Population data
+## Population data
+
+Steps followed for cleaning the Population data:
 
 For population data 2010 to 2019.
 
