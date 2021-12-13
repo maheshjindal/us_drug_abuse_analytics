@@ -1,3 +1,6 @@
 # Interactive component
 
 
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+htmltools::includeHTML("d3/index.html")
+```
