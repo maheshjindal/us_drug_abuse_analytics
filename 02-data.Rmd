@@ -8,6 +8,13 @@ The data set used for the project are:
 
 3.  https://www2.census.gov/programs-surveys/popest/datasets/2010/2010-eval-estimates/sc-est2010-alldata5.csv. This data was published by the United states census Bureau. This contains information about each states population across various dimensions such as age, gender, race. The data is from 2010 to 2020.
 
+We looked and explored for other data sources as well. There is no source which provides well documents Drug abuse trends directly. There are two other notable data sources which are:
+
+1. Monitoring the Futures Survey data (https://www.icpsr.umich.edu/web/NAHDAP/series/35). This survey was designed to explore changes in important values, behaviors, and lifestyle orientations of contemporary American youth. The surveys began in 1975 with 12th-grade students only. Eighth- and 10th-grade student surveys were added in 1991. It is an ongoing survey. 
+  - Issue: The data in this dataset were in form of 3000 questions. Each question was represented by a column in the dataset. As we had limited span, we could not use this as our dataset as we would have to undersatnd all the 3000 questions to make use of this dataset.
+
+2. CDC (Center for Disease Control) Underlying causes of death data (https://wonder.cdc.gov/controller/datarequest/D76). 
+ - Issue: This data did not have a lot of variables and we would not be able to understand the underlying trends between demographics and drug abuse.
 
 ## Data Description
 
