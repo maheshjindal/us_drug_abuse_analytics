@@ -135,7 +135,7 @@ cases_per_year_for_a_region_and_state_drug %>%
   filter(SUB1 == 'Heroin') %>% 
   group_by(Year,state) %>% 
   summarise(value = mean(Proportion_of_cases), .groups = 'drop') %>% 
-  ggplot(aes(state = state,fill = value)) + geom_statebins() + facet_wrap(~Year) + theme_bw() + ggtitle("Proportion of admissions for state across time")+ labs(subtitle = 'Substance: Heroin') + theme(axis.text.x = element_blank(),axis.text.y = element_blank(),axis.ticks = element_blank()) + guides(fill = guide_legend(reverse = TRUE)) + scale_fill_viridis(option="mako" ,name = "Proportion of Admission", direction = -1) + theme(legend.position="top")
+  ggplot(aes(state = state,fill = value)) + geom_statebins() + facet_wrap(~Year) + theme_bw() + ggtitle("Proportion of admissions for state across time")+ labs(subtitle = 'Substance: Heroin') + theme(axis.text.x = element_blank(),axis.text.y = element_blank(),axis.ticks = element_blank()) + scale_fill_viridis(option="mako" ,name = "Proportion of Admission", direction = -1) + theme(legend.position="top")
 
   
 ```
