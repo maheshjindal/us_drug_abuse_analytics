@@ -23,7 +23,7 @@ tedsa_puf_2000_2019 <- read.csv("tedsa_puf_2000_2019.csv")
 
 ### Treatment data
 
-1. There are too many variables recorded in the dataset. We picked a few important ones for our analysis. We chose 12 important variables along with 3 variables which answered survey questions for each wave. The 12 important variables we chose are: 'AGE', 'ADMYR' (Year), 'GENDER', 'RACE', 'EDUC' (Education), 'STFIPS' (States), 'REGION', 'DIVISION','SERVICES' (Treatment), 'SUB1' (Substance consumed), 'ROUTE1' (How it was consumed), 'FREQ1' (Frequency of consumption).
+1. There are too many variables recorded in the dataset. We picked a few important ones for our analysis. We chose 12 important variables. They are: 'AGE', 'ADMYR' (Year), 'GENDER', 'RACE', 'EDUC' (Education), 'STFIPS' (States), 'REGION', 'DIVISION','SERVICES' (Treatment), 'SUB1' (Substance consumed), 'ROUTE1' (How it was consumed), 'FREQ1' (Frequency of consumption).
 
 ```{r Variable_selection, echo = FALSE}
 tedsa_puf_2000_2019 <- tedsa_puf_2000_2019 %>% select(AGE, ADMYR, GENDER, RACE, EDUC,STFIPS,REGION,DIVISION,SERVICES,SUB1,ROUTE1,FREQ1)
@@ -132,6 +132,202 @@ tedsa_puf_2000_2019 <- tedsa_puf_2000_2019 %>% filter(FREQ1 %in% a$FREQ1[1:3])
 
 4. For the RACE column we keep the 'White', 'Black or African American' rows, combine 'American Indian' and 'Alaska Native' together into 'American Indian or Alaska Native Alone' and put all the other RACES into 'Others'. This was done because the other data source 'population data' had race in this format. To keep consistency across data sources this transformation was necessary.
 
+```{r Race, echo = FALSE}
+tedsa_puf_2000_2019 <- tedsa_puf_2000_2019 %>% mutate( RACE = case_when(
+  RACE == 'White' ~ "White",
+  RACE == 'Black or African American'  ~ "Black or African American",
+  RACE == 'American Indian'  ~ "American Indian or Alaska Native Alone",
+  RACE == 'Alaska Native'  ~ "American Indian or Alaska Native Alone",
+  RACE == 'Other single race'  ~ "Others",
+  RACE == 'Missing'  ~ "Others",
+  RACE == 'Two or more races'  ~ "Others",
+  RACE == 'Asian'  ~ "Others",
+  RACE == 'Asian or Pacific Islander'  ~ "Others",
+  RACE == 'Native Hawaiian or Other Pacific Islander'  ~ "Others"
+)
+)
+```
+
 5. Now we group by all the columns, as the data has multiple rows with same characteristics. As each row represents an admission. So we will group by all the columns to get number of cases for each characteristic of admission.
 
+```{r group_data, echo = FALSE}
+tedsa_puf_2000_2019$count = 1
 
+tedsa_puf_2000_2019 <- tedsa_puf_2000_2019 %>% group_by(AGE,ADMYR,GENDER,RACE,EDUC,STFIPS,REGION,DIVISION,SERVICES,SUB1,ROUTE1,FREQ1) %>% dplyr::summarize(gr_sum = sum(`count`)) %>% as.data.frame()
+
+save(tedsa_puf_2000_2019, file = "tedsa_puf_2000_2019_final_cleaned.RData")
+
+```
+
+
+### Population data
+
+For population data 2010 to 2019.
+
+```{r read_population_data, echo = FALSE}
+population_data <- read.csv("sc-est2019-alldata5.csv")
+```
+
+1. There are too many variables recorded in the dataset. We picked a few important ones for our analysis. We chose 17 important variables. They are: 'AGE', 'SEX', 'RACE','NAME'(States),'REGION','DIVISION','POPESTIMATE2010','POPESTIMATE2011','POPESTIMATE2012','POPESTIMATE2013','POPESTIMATE2014','POPESTIMATE2015','POPESTIMATE2016','POPESTIMATE2017','POPESTIMATE2018','POPESTIMATE2019','ORIGIN'.
+
+2. Filter for Origin = 0 (Total) and then remove this column. As we will not be diving deep into population's origin as this column is not present in treatment data.
+
+3. According to data dictionary, the values in each column represented something so for each variable we transformed the data to the original meaning by creating and using the following [json](url).
+
+```{r transform_population_data, echo = FALSE}
+for (i in colnames(population_data))
+{
+  if (i %in% c("SEX","REGION","DIVISION","RACE"))
+      {
+      population_data[[i]] <- sapply(population_data[[i]], function(col1)
+        {
+          names(metadata[[i]])[metadata[[i]] == col1]
+        }
+      )
+      }
+}
+```
+
+*2.1. SEX -> "0": "Total","1": "Male","2": "Female"*
+
+*2.2. RACE -> "1": "White","2": "Black or African American","3": "American Indian or Alaska Native Alone","4": "Asian","5": "Native Hawaiian or Other Pacific Islander","6": "Two or more races"*
+
+*2.3. REGION -> "1": "Northeast","2": "Midwest","3": "South","4": "West"*
+
+*2.4. DIVISION -> "1": "New England","2": "Middle Atlantic","3": "East North Central","4": "West North Central","5": "South Atlantic","6": "East South Central","7": "West South Central","8": "Mountain","9": "Pacific"*
+
+*2.5. NAME -> Name of each state*
+
+*2.6. AGE -> numerical variable ranging from 0 to 85*
+
+*2.7. POPESTIMATE2010 -> Estimated population of 2010
+
+*2.8. POPESTIMATE2011 -> Estimated population of 2011
+
+*2.9. POPESTIMATE2012 -> Estimated population of 2012
+
+*2.10. POPESTIMATE2013 -> Estimated population of 2013
+
+*2.11. POPESTIMATE2014 -> Estimated population of 2014
+
+*2.12. POPESTIMATE2015 -> Estimated population of 2015
+
+*2.13. POPESTIMATE2016 -> Estimated population of 2016
+
+*2.14. POPESTIMATE2017 -> Estimated population of 2017
+
+*2.15. POPESTIMATE2018 -> Estimated population of 2018
+
+*2.16. POPESTIMATE2019 -> Estimated population of 2019
+
+4. Remove Sex = 'Total', as want to look at the subcategories male and female.
+
+```{r subset_population_data, echo = FALSE}
+population_data <- population_data %>% filter(SEX != 'Total') %>% filter(ORIGIN == 0) %>%  select(-
+c('SUMLEV','ORIGIN','STATE','ESTIMATESBASE2010','CENSUS2010POP'))
+```
+
+5. Transform the Age variable (numerical) to age categories(categorical) as we have only got age categories in treatment data. Also, change the RACE variable categories to match the treatment dataset Race categories.
+
+```{r race_and_age,echo = FALSE}
+population_data <- population_data %>% mutate( AGE_CATEGORY = case_when(
+  AGE < 12 ~ "Less than 12",
+  AGE < 15  ~ "12–14",
+  AGE < 18  ~ "15–17",
+  AGE < 21  ~ "18–20",
+  AGE < 25  ~ "21–24",
+  AGE < 30 ~ "25–29",
+  AGE < 35  ~ "30–34",
+  AGE < 40  ~ "35–39",
+  AGE < 45  ~ "40–44",
+  AGE < 50  ~ "45–49",
+  AGE < 55  ~ "50–54",
+  AGE < 65  ~ "55–64",
+  AGE >= 65 ~ "65+"
+)
+)
+
+population_data <- population_data %>% mutate( RACE = case_when(
+  RACE == 'White' ~ "White",
+  RACE == 'Black or African American'  ~ "Black or African American",
+  RACE == 'Native Hawaiian or Other Pacific Islander'  ~ "Others",
+  RACE == 'American Indian or Alaska Native Alone' ~ "American Indian or Alaska Native Alone",
+  RACE == 'Asian'  ~ "Others",
+  RACE == 'Two or more races'  ~ "Others"
+)
+)
+```
+
+6. Aggregate the data on these relevant columns.
+
+7. Pivot the table so that the different columns for population estimate for each year becomes can be represented by 2 columns - 'Year' and 'Population estimate' (pivot_longer)
+
+```{r population_grouping, echo = FALSE}
+population_data <- population_data %>% select(-c("AGE"))
+population_data <- aggregate(.~REGION+DIVISION+NAME+SEX+RACE+AGE_CATEGORY, population_data, sum)
+population_data <- population_data %>% pivot_longer(-c("REGION","DIVISION","NAME","SEX","RACE","AGE_CATEGORY"), names_to = "Year", values_to = "Population_count")
+population_data$Year <- str_sub(population_data$Year,-4)
+```
+
+8. The above steps are also followed for the population dataset from 2001 to 2010.
+
+9. Append (Rbind) the two datasets to get a final population dataset. Also change the name of the following columns so as to match the treatment dataset: AGE_CATEGORY,SEX,Year,NAME to AGE,GENDER,ADMYR,STFIPS respectively.
+
+```{r Combining_population_dataset,echo = False}
+population_data1 <- read.csv("/Users/mridulgupta/Downloads/sc-est2010-alldata5.csv")
+
+for (i in colnames(population_data1))
+{
+  if (i %in% c("SEX","REGION","DIVISION","RACE"))
+      {
+      population_data1[[i]] <- sapply(population_data1[[i]], function(col1)
+        {
+          names(metadata[[i]])[metadata[[i]] == col1]
+        }
+      )
+      }
+}
+
+population_data1 <- population_data1 %>% filter(SEX != 'Total') %>% filter(ORIGIN == 0) %>%  select(-c('ORIGIN','STATE','SUMLEV','ESTIMATESBASE2000','CENSUS2000POP'))
+
+population_data1 <- population_data1 %>% mutate( AGE_CATEGORY = case_when(
+  AGE < 12 ~ "Less than 12",
+  AGE < 15  ~ "12–14",
+  AGE < 18  ~ "15–17",
+  AGE < 21  ~ "18–20",
+  AGE < 25  ~ "21–24",
+  AGE < 30 ~ "25–29",
+  AGE < 35  ~ "30–34",
+  AGE < 40  ~ "35–39",
+  AGE < 45  ~ "40–44",
+  AGE < 50  ~ "45–49",
+  AGE < 55  ~ "50–54",
+  AGE < 65  ~ "55–64",
+  AGE >= 65 ~ "65+"
+)
+)
+
+population_data1 <- population_data1 %>% mutate( RACE = case_when(
+  RACE == 'White' ~ "White",
+  RACE == 'Black or African American'  ~ "Black or African American",
+  RACE == 'Native Hawaiian or Other Pacific Islander'  ~ "Others",
+  RACE == 'American Indian or Alaska Native Alone' ~ "American Indian or Alaska Native Alone",
+  RACE == 'Asian'  ~ "Others",
+  RACE == 'Two or more races'  ~ "Others"
+)
+)
+
+population_data1 <- population_data1 %>% select(-c("AGE","POPESTIMATE72010","POPESTIMATE42010"))
+
+population_data1 <- aggregate(.~REGION+DIVISION+STNAME+SEX+RACE+AGE_CATEGORY, population_data1, sum)
+
+population_data1 <- population_data1 %>% pivot_longer(-c("REGION","DIVISION","STNAME","SEX","RACE","AGE_CATEGORY"), names_to = "Year", values_to = "Population_count")
+
+population_data1$Year <- str_sub(population_data1$Year,-4)
+
+names(population_data1)[names(population_data1) == 'STNAME'] <- "NAME"
+
+final_population_data <- rbind(population_data,population_data1)
+
+final_population_data <- final_population_data %>% rename(AGE = AGE_CATEGORY,GENDER = SEX,ADMYR = Year, STFIPS = NAME)
+```
