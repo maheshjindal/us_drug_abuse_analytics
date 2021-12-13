@@ -4,7 +4,7 @@
 
 As we had a lot of data initially ~37M rows, we removed rows from each categorical variable, that were less in percentage. For more details, see the data transformation section [here](url). The following visualization gives information about missing data after the transformation:
 
-```{r missing_value_analysis,fig.height = 6,fig.width = 10}
+```{r missing_value_analysis,fig.height = 6,fig.width = 10, echo = FALSE}
 missing_value_patterns <- function(df, percent = TRUE) {
   df[df=="Missing"] <- NA
   if (percent == TRUE) {
@@ -132,7 +132,22 @@ Observations:
 
 ## Understanding missing values pattern
 
+```{r missing_pattern_analysis,fig.height = 6,fig.width = 10, echo = FALSE}
+library(patchwork)
+missing <- dataset %>% filter(EMPLOY == "Missing")
+missing_state <- missing %>% group_by(STFIPS) %>% summarise(`count` = n())
+missing_state['Percentage_of_rows'] <- (missing_state['count']/dim(missing)[1]) * 100 
+g1 <- ggplot(missing_state[1:20, ], aes(x = Percentage_of_rows, y = reorder(STFIPS, Percentage_of_rows))) + geom_point() + labs(x = 'Percentage of Missing Value', y = "State", title = "Percentage of missing employment data by states") + theme_bw()
 
+missing_year <- missing %>% group_by(ADMYR) %>% summarise(`count` = n())
+missing_year['Percentage_of_rows'] <- (missing_year['count']/dim(missing)[1]) * 100 
+g2 <- ggplot(missing_year[1:20, ], aes(x = Percentage_of_rows, y = ADMYR)) + geom_point() + labs(x = 'Percentage of Missing Value', y = "Year", title = "Percentage of missing employment data by years") + theme_bw()
+g1+g2
+```
+Onservations:
+
+1. The Employment data was missing during the early 2000's. The recent data has information about employment.
+2. The state of California account for 30% of the missing data. This is much larger than any other state.
 
 
 
