@@ -23,7 +23,7 @@ d3.csv("data/drug_abuse_cases_demographics_grouped.csv")
           "West Virginia", "Wisconsin", "Wyoming"
       ];
 
-      select = document.getElementById("selected_state");
+      var select = document.getElementById("selected_state");
       states.forEach((val)=> {
         let selectOption = document.createElement("option");
         selectOption.value = val;
