@@ -16,7 +16,7 @@ library(rjson)
 ```
 
 ```{r read_data, echo = FALSE}
-tedsa_puf_2000_2019 <- read.csv("tedsa_puf_2000_2019.csv")
+tedsa_puf_2000_2019 <- read.csv("data/tedsa_puf_2000_2019.csv")
 ```
 
 ## Subsetting the data
@@ -32,7 +32,7 @@ tedsa_puf_2000_2019 <- tedsa_puf_2000_2019 %>% select(AGE, ADMYR, GENDER, RACE, 
 2. According to data dictionary, the values in each column represnted something so for each variable we transformed the data to the original meaning by creating and using the following [json](url).
 
 ```{r transform_columns, echo = FALSE}
-metadataJSONPath <- '/Users/mridulgupta/Downloads/smetadata.json'
+metadataJSONPath <- 'data/smetadata.json'
 metadata <- fromJSON(file=metadataJSONPath)
 
 tedsa_puf_2000_2019 <- as.data.frame(tedsa_puf_2000_2019)
@@ -155,7 +155,7 @@ tedsa_puf_2000_2019$count = 1
 
 tedsa_puf_2000_2019 <- tedsa_puf_2000_2019 %>% group_by(AGE,ADMYR,GENDER,RACE,EDUC,STFIPS,REGION,DIVISION,SERVICES,SUB1,ROUTE1,FREQ1) %>% dplyr::summarize(gr_sum = sum(`count`)) %>% as.data.frame()
 
-save(tedsa_puf_2000_2019, file = "tedsa_puf_2000_2019_final_cleaned.RData")
+save(tedsa_puf_2000_2019, file = "data/tedsa_puf_2000_2019_final_cleaned.RData")
 
 ```
 
@@ -165,7 +165,7 @@ save(tedsa_puf_2000_2019, file = "tedsa_puf_2000_2019_final_cleaned.RData")
 For population data 2010 to 2019.
 
 ```{r read_population_data, echo = FALSE}
-population_data <- read.csv("sc-est2019-alldata5.csv")
+population_data <- read.csv("data/sc-est2019-alldata5.csv")
 ```
 
 1. There are too many variables recorded in the dataset. We picked a few important ones for our analysis. We chose 17 important variables. They are: 'AGE', 'SEX', 'RACE','NAME'(States),'REGION','DIVISION','POPESTIMATE2010','POPESTIMATE2011','POPESTIMATE2012','POPESTIMATE2013','POPESTIMATE2014','POPESTIMATE2015','POPESTIMATE2016','POPESTIMATE2017','POPESTIMATE2018','POPESTIMATE2019','ORIGIN'.
@@ -274,7 +274,7 @@ population_data$Year <- str_sub(population_data$Year,-4)
 9. Append (Rbind) the two datasets to get a final population dataset. Also change the name of the following columns so as to match the treatment dataset: AGE_CATEGORY,SEX,Year,NAME to AGE,GENDER,ADMYR,STFIPS respectively.
 
 ```{r Combining_population_dataset,echo = False}
-population_data1 <- read.csv("/Users/mridulgupta/Downloads/sc-est2010-alldata5.csv")
+population_data1 <- read.csv("data/sc-est2010-alldata5.csv")
 
 for (i in colnames(population_data1))
 {
