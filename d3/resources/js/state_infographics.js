@@ -1,5 +1,5 @@
 let margin = {
-  top: 20,
+  top: 25,
   right: 50,
   bottom: 30,
   left: 100
@@ -12,11 +12,10 @@ d3.csv("data/drug_abuse_cases_demographics_grouped.csv")
       for (var i = 0; i < input.length; i++) {
           data.push(input[i]);
       }
-      data.forEach(function(d) {
-          d.ADMYR = timeParser(d.ADMYR);
-      });
+      // parse the year to DATE
+      data.forEach((d) => d.ADMYR = timeParser(d.ADMYR));
 
-      state_name = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia",
+      let states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia",
           "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
           "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
           "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
@@ -24,33 +23,28 @@ d3.csv("data/drug_abuse_cases_demographics_grouped.csv")
           "West Virginia", "Wisconsin", "Wyoming"
       ];
 
-      var input;
-
       select = document.getElementById("selected_state");
+      states.forEach((val)=> {
+        let selectOption = document.createElement("option");
+        selectOption.value = val;
+        selectOption.text = val.charAt(0).toUpperCase() + val.slice(1);
+        select.appendChild(selectOption);
+      })
 
-      for (const val of state_name) {
-          var option = document.createElement("option");
-          option.value = val;
-          option.text = val.charAt(0).toUpperCase() + val.slice(1);
-          select.appendChild(option);
-      }
+
       $('select').on('change', function(e) {
-
-          d3.selectAll("circle").remove()
-          d3.selectAll("text").remove()
-
-          d3.select("g").remove();
+        /**
+         * Reset Occurences
+         */
+        resetPlot();
           var svg = d3.select("svg")
           var g = svg.append("g").attr("transform", `translate(${margin.left}, ${margin.top})`).style("text-anchor", "end");
 
-          var width = +svg.attr("width") - margin.left - margin.right;
-          var height = +svg.attr("height") - margin.top - margin.bottom;
-
-          var optionSelected = $("option:selected", this);
-          input = this.value;
-          state_rows = data.filter(function(item) {
-              return item.STFIPS == input;
-          });
+          var width = svg.attr("width") - margin.left - margin.right;
+          var height = svg.attr("height") - margin.top - margin.bottom;
+          
+          let input = this.value;
+          let row_for_state = data.filter((item) =>  item.STFIPS == input);
           /**
            * LIST of ALL the substances and their corresponding legend location
            */
@@ -111,16 +105,13 @@ d3.csv("data/drug_abuse_cases_demographics_grouped.csv")
           /**
            * Sets X and Y scale
            */
-          var dataXrange = d3.extent(state_rows, function(d) {
+          var dataXrange = d3.extent(row_for_state, function(d) {
               return d.ADMYR;
           });
-          var dataYrange = d3.extent(state_rows, function(d) {
+          var dataYrange = d3.extent(row_for_state, function(d) {
               return d.Proportion_of_cases;
           });
-          var mindate = dataXrange[0],
-              maxdate = dataXrange[1];
-          var minpropotion = dataYrange[0],
-              maxpropotion = dataYrange[1];
+          var minpropotion = dataYrange[0], maxpropotion = dataYrange[1];
           var xScale = d3.scaleTime().range([0, width]).domain(dataXrange);
           var yScale = d3.scaleLinear().range([height, 0]).domain([Math.min(0, minpropotion), Math.max(1, maxpropotion)]);
 
@@ -133,7 +124,6 @@ d3.csv("data/drug_abuse_cases_demographics_grouped.csv")
                   "translate(" + (width / 2) + " ," +
                   (height + margin.top + 10) + ")")
               .style("padding-bottom", "10px")
-
               .style("text-anchor", "middle")
               .text("Year");
 
@@ -149,10 +139,12 @@ d3.csv("data/drug_abuse_cases_demographics_grouped.csv")
               .text("Population Propotion");
 
           for (var i = 0; i < substancesInfo.length; i++) {
-              var state_rows_per_substance = state_rows.filter((_) => _.SUB1 == substancesInfo[i].name);
+              var state_rows_per_substance = row_for_state.filter((_) => _.SUB1 == substancesInfo[i].name);
+              // Adds line
               var line = d3.line()
                   .x(d => xScale(d.ADMYR))
                   .y(d => yScale(d.Proportion_of_cases));
+            // Adds path
               g.append("path")
                   .datum(state_rows_per_substance)
                   .attr("class", substancesInfo[i].name)
@@ -166,5 +158,10 @@ d3.csv("data/drug_abuse_cases_demographics_grouped.csv")
                   .attr("d", line);
           }
       });
+      function resetPlot(){
+        d3.selectAll("circle").remove()
+        d3.selectAll("text").remove()
+        d3.select("g").remove();
+      }
 
   })
