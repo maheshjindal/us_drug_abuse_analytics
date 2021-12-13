@@ -330,4 +330,6 @@ names(population_data1)[names(population_data1) == 'STNAME'] <- "NAME"
 final_population_data <- rbind(population_data,population_data1)
 
 final_population_data <- final_population_data %>% rename(AGE = AGE_CATEGORY,GENDER = SEX,ADMYR = Year, STFIPS = NAME)
+
+write.csv(final_population_data, file = "final_population_data.csv",row.names = FALSE)
 ```
