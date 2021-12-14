@@ -1,2 +1,53 @@
 # Conclusion
 
+## Summary
+
+The data was analysed with a view to understand the demographic, clinical, and substance use characteristics of admissions to alcohol or drug treatment in various facilities across states. This extensive data which includes demographic variables like Age, Gender, Race etc help us understand the correlations between these identities and the substance abuse.
+
+Our analysis follows a top-down approach, we start with the broader and more general questions like: What is the trend of the admission due to the different drugs in different region to more specific question like Is employment status of people contributing to the increasing Heroin admission in the District of Columbia.
+
+The analysis is an attempt to understand these complex questions, dive-deep and form hypothesis which can then be tested and some conclusions can be made. The process is exhaustive and includes steps for data preprocessing, data transformation, missing value analyisis and static and interactive visualizations for the constructed questions. For each visualization, observations and our hypothesis for such observations have also been included.
+
+Some of the key observations we made regarding the admissions trends:
+
+**Region level:**
+
+1. There seems to be a sharp increase in the number of people admitted due to Heroin after 2010. On the other end, patients admitted due to alcohol and cocaine overdose seems to have decreased sharply after 2009 and 2006 respectively.
+
+2. The trend of admission to hospitals due to Heroin consumption has increased sharply for the Northeast and south region and increased steadly for the Midwest region. Surprisingly, for the West region, the trend seems to be constant/decreasing.
+
+**State level:**
+
+1. In the Northeast region, Massachusetts (MA) and Connecticut (CT) admission due to Heroin abuse have increased drastically over the years.
+
+2. In the South region, Maryland and Delaware seems to have a sharp increase in the admission due to Heroin abuse. District of columbia also shows an increase but all the other states seem to be almost steady in their rate of admission.
+
+3. Almost all states in the north east are increasing steadily over time. In general the increase for most states became more sharp post 2009-10.
+
+4. For the South region, Maryland and Delaware show recent uprise in the admission trend from 2014 and 2016 respectively. It had been almost steady for both the states before.
+
+**Southern States for Heroin:**
+
+1. In terms of gender, both Maryland and Delaware see a sharp increase over the years. But in case of Maryland,the proportion of admission increased for both males and females from 2016 to 2017 but from 2017 to 2018 the increase is male admissions is much more.
+
+2. District of Columbia(DC) shows an unusual trend. Unlike other states in the South region, DC has much more admissions from people belonging to higher age group.
+
+3. Retired people and unemployed people in the District of Columbia are consuming more drugs (including Heroin) as compared to other states with the same popualtion (Retired and unemployed).
+
+4. In terms of Race, There are very unusual trends in the neigbouring states of Delaware and Maryland and the recent increase in the admissions is very different for the White and Black population in the two states. Admissions due to Black population have spiked a lot in Maryland, but it did not spike much in Delaware. On the other end, admission of white population due to Heroin have increased in both Delaware and Maryland.
+
+## Limitations
+
+1. Because of the huge dataset ~37 Million rows, it is impossible to look at the complete data. It requires some pre processing which leads to some loss of the original data.
+
+2. We cannot directly correlate the admission trends with the consumption trends because these variables might be related by other xogenous variables. We can form an hypothesis though that the increasing admission trend imply increasing consumption trend.
+
+3. The treatment data does not contain data about all admissions. It is a huge dataset and is meant to be used to understand the characteristics of the substance abuse, form hypothesis and understand the underlying trends.
+
+## Future Work
+
+1. Due to limited amount of time, our analysis mostly focuses on Heroin admission trends and certain number of demographic and human personal development indicators. We can look at other drugs as well as other variables that might expalin some of the underlying trends about the admissions.
+
+2. We can look at the other data sources mentioned in the data sources section [here](url). These might help us understand the health issues, overall trends and behavioral change among teenagers (Monitoring the Futures).
+
+3. We can look at possible remidial steps being taken be the government to mitigate the crisis and correlate it with our analysis to understand if the steps could really benefit and mitigate this crisis. For example, if unemployment and drug abuse have direct correlation, the best way to tackle this crisis is to generate employment for youth.
