@@ -87,13 +87,14 @@
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#subsetting-the-data"><i class="fa fa-check"></i><b>3.1</b> Subsetting the data</a>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#treatment-data"><i class="fa fa-check"></i><b>3.1</b> Treatment data</a></li>
+<li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#population-data"><i class="fa fa-check"></i><b>3.2</b> Population data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="data-transformation.html"><a href="data-transformation.html#treatment-data"><i class="fa fa-check"></i><b>3.1.1</b> Treatment data</a></li>
-<li class="chapter" data-level="3.1.2" data-path="data-transformation.html"><a href="data-transformation.html#population-data"><i class="fa fa-check"></i><b>3.1.2</b> Population data</a></li>
+<li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#number-of-missing-attributes"><i class="fa fa-check"></i><b>4.1</b> Number of missing attributes</a></li>
+<li class="chapter" data-level="4.2" data-path="missing-values.html"><a href="missing-values.html#understanding-missing-values-pattern"><i class="fa fa-check"></i><b>4.2</b> Understanding missing values pattern</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#does-the-admissions-due-to-different-substance-vary-with-time"><i class="fa fa-check"></i><b>5.1</b> Does the admissions due to different substance vary with time?</a></li>
@@ -103,7 +104,8 @@
 <li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#section"><i class="fa fa-check"></i><b>5.5</b> </a></li>
 <li class="chapter" data-level="5.6" data-path="results.html"><a href="results.html#does-gender-play-a-role-in-admission-due-to-heroin-abuse-in-the-south-region"><i class="fa fa-check"></i><b>5.6</b> Does gender play a role in admission due to heroin abuse in the South region?</a></li>
 <li class="chapter" data-level="5.7" data-path="results.html"><a href="results.html#does-age-play-a-role-in-admission-due-to-heroin-abuse-in-the-south-region"><i class="fa fa-check"></i><b>5.7</b> Does age play a role in admission due to heroin abuse in the South region?</a></li>
-<li class="chapter" data-level="5.8" data-path="results.html"><a href="results.html#does-race-play-a-role-in-the-admission-due-to-heroin-abuse-in-the-south-region"><i class="fa fa-check"></i><b>5.8</b> Does race play a role in the admission due to heroin abuse in the South region?</a></li>
+<li class="chapter" data-level="5.8" data-path="results.html"><a href="results.html#does-employment-play-a-role-in-admission-due-to-substance-abuse"><i class="fa fa-check"></i><b>5.8</b> Does employment play a role in admission due to Substance abuse?</a></li>
+<li class="chapter" data-level="5.9" data-path="results.html"><a href="results.html#does-race-play-a-role-in-the-admission-due-to-heroin-abuse-in-the-south-region"><i class="fa fa-check"></i><b>5.9</b> Does race play a role in the admission due to heroin abuse in the South region?</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
@@ -128,26 +130,30 @@
             <section class="normal" id="section-">
 <div id="data-transformation" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
-<div id="subsetting-the-data" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Subsetting the data</h2>
-<div id="treatment-data" class="section level3" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> Treatment data</h3>
+<div id="treatment-data" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Treatment data</h2>
+<p>The treatment dataset initially contained 37558015 rows and 62 columns.</p>
+<p>Steps followed for cleaning the Treatment data:</p>
 <ol style="list-style-type: decimal">
-<li><p>There are too many variables recorded in the dataset. We picked a few important ones for our analysis. We chose 12 important variables. They are: ‘AGE’, ‘ADMYR’ (Year), ‘GENDER’, ‘RACE’, ‘EDUC’ (Education), ‘STFIPS’ (States), ‘REGION’, ‘DIVISION’,‘SERVICES’ (Treatment), ‘SUB1’ (Substance consumed), ‘ROUTE1’ (How it was consumed), ‘FREQ1’ (Frequency of consumption).</p></li>
-<li><p>According to data dictionary, the values in each column represnted something so for each variable we transformed the data to the original meaning by creating and using the following <a href="url">json</a>.</p></li>
+<li><p>There are too many variables recorded in the dataset. We picked a few important ones for our analysis. We chose 12 important variables. They are: ‘AGE’, ‘ADMYR’ (Year), ‘GENDER’, ‘RACE’, ‘EDUC’ (Education),‘EMPLOY’ (Employment Status), ‘STFIPS’ (States), ‘REGION’, ‘DIVISION’,‘SERVICES’ (Treatment), ‘SUB1’ (Substance consumed), ‘ROUTE1’ (How it was consumed), ‘FREQ1’ (Frequency of consumption).</p></li>
+<li><p>According to data dictionary, the values in each column represnted something so for each variable we transformed the data to the original meaning by creating and using the following <a href="url">json</a>.
+<em>2.1. AGE -&gt; “1”: “12–14”, “2”: “15–17”, “3”: “18–20”,“4”: “21–24”, “5”: “25–29”, “6”: “30–34”, “7”: “35–39”, “8”: “40–44”, “9”: “45–49”, “10”: “50–54”, “11”: “55–64”, “12”: “65+”</em></p></li>
 </ol>
-<p><em>2.1. AGE -&gt; “1”: “12–14”, “2”: “15–17”, “3”: “18–20”,“4”: “21–24”, “5”: “25–29”, “6”: “30–34”, “7”: “35–39”, “8”: “40–44”, “9”: “45–49”, “10”: “50–54”, “11”: “55–64”, “12”: “65+”</em></p>
 <p><em>2.2. ADMYR -&gt; “2000”,“2001”,“2002”,“2003”,“2004”, “2005”, “2006”, “2007”, “2008”, “2009”, “2010”, “2011”, “2012”, “2013”, “2014”, “2015”, “2016”, “2017”, “2018”, “2019”</em></p>
 <p><em>2.3. GENDER -&gt; “1”: “Male”,“2”: “Female”, “-9”: “Missing”</em></p>
 <p><em>2.4. RACE -&gt; “1”: “Alaska Native”,“2”: “American Indian”,“3”: “Asian or Pacific Islander”,“4”: “Black or African American”,“5”: “White”,“6”: “Asian”,“7”: “Other single race”,“8”: “Two or more races”,“9”: “Native Hawaiian or Other Pacific Islander”,“-9”: “Missing”</em></p>
 <p><em>2.5. EDUC -&gt; “1”: “Less than one school grade, no schooling, nursery school, or kindergarten to Grade 8”,“2”: “Grades 9 to 11”,“3”: “Grade 12”,“4”: “1-3 years of college”,“5”: “4 years of college”,“-9”: “Missing”</em></p>
-<p><em>2.6. STFIPS -&gt; “1”: “Alabama”,“2”: “Alaska”,“4”: “Arizona”,“5”: “Arkansas”,“6”: “California”,“8”: “Colorado”,“9”: “Connecticut”,“10”: “Delaware”,“11”: “District of Columbia”,“12”: “Florida”,“13”: “Georgia”,“15”: “Hawaii”,“16”: “Idaho”,“17”: “Illinois”,“18”: “Indiana”,“19”: “Iowa”,“20”: “Kansas”,“21”: “Kentucky”,“22”: “Louisiana”,“23”: “Maine”,“24”: “Maryland”,“25”: “Massachusetts”,“26”: “Michigan”,“27”: “Minnesota”,“28”: “Mississippi”,“29”: “Missouri”,“30”: “Montana”,“31”: “Nebraska”,“32”: “Nevada”,“33”: “New Hampshire”,“34”: “New Jersey”,“35”: “New Mexico”,“36”: “New York”,“37”: “North Carolina”,“38”: “North Dakota”,“39”: “Ohio”,“40”: “Oklahoma”,“41”: “Oregon”,“42”: “Pennsylvania”,“44”: “Rhode Island”,“45”: “South Carolina”,“46”: “South Dakota”,“47”: “Tennessee”,“48”: “Texas”,“49”: “Utah”,“50”: “Vermont”,“51”: “Virginia”,“53”: “Washington”,“54”: “West Virginia”,“55”: “Wisconsin”,“56”: “Wyoming”,“72”: “Puerto Rico”</em></p>
-<p><em>2.7. REGION -&gt; “0”: “U.S. territories”,“1”: “Northeast”,“2”: “Midwest”,“3”: “South”,“4”: “West”</em></p>
-<p><em>2.8. DIVISION -&gt; “0”: “U.S. territories”,“1”: “New England”,“2”: “Middle Atlantic”,“3”: “East North Central”,“4”: “West North Central”,“5”: “South Atlantic”,“6”: “East South Central”,“7”: “West South Central”,“8”: “Mountain”,“9”: “Pacific”</em></p>
-<p><em>2.9. SERVICES -&gt; “1”: “Detox, 24-hour, hospital inpatient”,“2”: “Detox, 24-hour, free-standing residential”,“3”: “Rehab/residential, hospital (non-detox)”,“4”: “Rehab/residential, short term (30 days or fewer)”,“5”: “Rehab/residential, long term (more than 30 days)”,“6”: “Ambulatory, intensive outpatient”,“7”: “Ambulatory, non-intensive outpatient”,“8”: “Ambulatory, detoxification”</em></p>
-<p><em>2.10. SUB1 -&gt; “1”: “None”,“2”: “Alcohol”,“3”: “Cocaine”,“4”: “Marijuana”,“5”: “Heroin”,“6”: “Non-prescription”,“7”: “Other opiates and synthetics”,“8”: “PCP”,“9”: “Hallucinogens”,“10”: “Methamphetamine”,“11”: “Other amphetamines”,“12”: “Other stimulants”,“13”: “Benzodiazepines”,“14”: “Other tranquilizers”,“15”: “Barbiturates”,“16”: “Other sedatives or hypnotics”,“17”: “Inhalants”,“18”: “Over-the-counter medications”,“19”: “Other drugs”,“-9”: “Missing”</em></p>
-<p><em>2.11. ROUTE1 -&gt; “1”: “Oral”,“2”: “Smoking”,“3”: “Inhalation”,“4”: “Injection”,“5”: “Other”,“-9”: “Missing”</em></p>
-<p><em>2.12. FREQ1 -&gt; “1”: “No use in the past month”,“2”: “Some use”,“3”: “Daily use”,“-9”: “Missing”</em></p>
+<p><em>2.6. EMPLOY -&gt; “1”: “Full-time”,“2”: “Part-time”,“3”: “Unemployed”,“4”: “Not in labor force”,“-9”: “Missing”</em></p>
+<p><em>2.7. STFIPS -&gt; “1”: “Alabama”,“2”: “Alaska”,“4”: “Arizona”,“5”: “Arkansas”,“6”: “California”,“8”: “Colorado”,“9”: “Connecticut”,“10”: “Delaware”,“11”: “District of Columbia”,“12”: “Florida”,“13”: “Georgia”,“15”: “Hawaii”,“16”: “Idaho”,“17”: “Illinois”,“18”: “Indiana”,“19”: “Iowa”,“20”: “Kansas”,“21”: “Kentucky”,“22”: “Louisiana”,“23”: “Maine”,“24”: “Maryland”,“25”: “Massachusetts”,“26”: “Michigan”,“27”: “Minnesota”,“28”: “Mississippi”,“29”: “Missouri”,“30”: “Montana”,“31”: “Nebraska”,“32”: “Nevada”,“33”: “New Hampshire”,“34”: “New Jersey”,“35”: “New Mexico”,“36”: “New York”,“37”: “North Carolina”,“38”: “North Dakota”,“39”: “Ohio”,“40”: “Oklahoma”,“41”: “Oregon”,“42”: “Pennsylvania”,“44”: “Rhode Island”,“45”: “South Carolina”,“46”: “South Dakota”,“47”: “Tennessee”,“48”: “Texas”,“49”: “Utah”,“50”: “Vermont”,“51”: “Virginia”,“53”: “Washington”,“54”: “West Virginia”,“55”: “Wisconsin”,“56”: “Wyoming”,“72”: “Puerto Rico”</em></p>
+<p><em>2.8. REGION -&gt; “0”: “U.S. territories”,“1”: “Northeast”,“2”: “Midwest”,“3”: “South”,“4”: “West”</em></p>
+<p><em>2.9. DIVISION -&gt; “0”: “U.S. territories”,“1”: “New England”,“2”: “Middle Atlantic”,“3”: “East North Central”,“4”: “West North Central”,“5”: “South Atlantic”,“6”: “East South Central”,“7”: “West South Central”,“8”: “Mountain”,“9”: “Pacific”</em></p>
+<p><em>2.10. SERVICES -&gt; “1”: “Detox, 24-hour, hospital inpatient”,“2”: “Detox, 24-hour, free-standing residential”,“3”: “Rehab/residential, hospital (non-detox)”,“4”: “Rehab/residential, short term (30 days or fewer)”,“5”: “Rehab/residential, long term (more than 30 days)”,“6”: “Ambulatory, intensive outpatient”,“7”: “Ambulatory, non-intensive outpatient”,“8”: “Ambulatory, detoxification”</em></p>
+<p><em>2.11. SUB1 -&gt; “1”: “None”,“2”: “Alcohol”,“3”: “Cocaine”,“4”: “Marijuana”,“5”: “Heroin”,“6”: “Non-prescription”,“7”: “Other opiates and synthetics”,“8”: “PCP”,“9”: “Hallucinogens”,“10”: “Methamphetamine”,“11”: “Other amphetamines”,“12”: “Other stimulants”,“13”: “Benzodiazepines”,“14”: “Other tranquilizers”,“15”: “Barbiturates”,“16”: “Other sedatives or hypnotics”,“17”: “Inhalants”,“18”: “Over-the-counter medications”,“19”: “Other drugs”,“-9”: “Missing”</em></p>
+<p><em>2.12. ROUTE1 -&gt; “1”: “Oral”,“2”: “Smoking”,“3”: “Inhalation”,“4”: “Injection”,“5”: “Other”,“-9”: “Missing”</em></p>
+<p><em>2.13. FREQ1 -&gt; “1”: “No use in the past month”,“2”: “Some use”,“3”: “Daily use”,“-9”: “Missing”</em></p>
+<p><em>“DETNLF” -&gt; “1”: “Homemaker”, “2”: “Student”, “3”: “Retired, disabled”, “4”: “Resident of institution”, “5”: “Other”, “-9”: “Missing”</em></p>
+<p><strong>Important:</strong></p>
+<p><em>The DETNLF column represents ‘Not in labour force’ rows of the EMPLOY column. To make lesser data and reduce redundant columns we replaced ‘Not in labour force’ of ‘EMPLOY’ column with this column values.</em></p>
 <ol start="3" style="list-style-type: decimal">
 <li>As the data had ~37 Million records. It was necessary to reduce our scope of analysis to important categories for each variable. Imporatnce was decided based on the percentage of rows the category was present in. For example:</li>
 </ol>
@@ -158,14 +164,15 @@
 3.3. REGION: “Northeast”, “Midwest”, “South”, “West”
 3.4. ROUTE1: “Oral”,“Smoking”,“Inhalation”,“Injection”
 3.5. FREQ1: “No use in the past month”, “Some use”, “Daily use”</p>
-<p>For all the other columns we consider all the data.</p>
+<p>For all the other columns we consider all the data except DETNLF which is removed.</p>
 <ol start="4" style="list-style-type: decimal">
 <li><p>For the RACE column we keep the ‘White’, ‘Black or African American’ rows, combine ‘American Indian’ and ‘Alaska Native’ together into ‘American Indian or Alaska Native Alone’ and put all the other RACES into ‘Others’. This was done because the other data source ‘population data’ had race in this format. To keep consistency across data sources this transformation was necessary.</p></li>
-<li><p>Now we group by all the columns, as the data has multiple rows with same characteristics. As each row represents an admission. So we will group by all the columns to get number of cases for each characteristic of admission.</p></li>
+<li><p>Now we group by all the columns, as the data has multiple rows with same characteristics. As each row represents an admission. So we will group by all the columns to get number of cases for each characteristic of admission. Now the dataset has 9493737 rows and 14 columns.</p></li>
 </ol>
 </div>
-<div id="population-data" class="section level3" number="3.1.2">
-<h3><span class="header-section-number">3.1.2</span> Population data</h3>
+<div id="population-data" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Population data</h2>
+<p>Steps followed for cleaning the Population data:</p>
 <p>For population data 2010 to 2019.</p>
 <ol style="list-style-type: decimal">
 <li><p>There are too many variables recorded in the dataset. We picked a few important ones for our analysis. We chose 17 important variables. They are: ‘AGE’, ‘SEX’, ‘RACE’,‘NAME’(States),‘REGION’,‘DIVISION’,‘POPESTIMATE2010’,‘POPESTIMATE2011’,‘POPESTIMATE2012’,‘POPESTIMATE2013’,‘POPESTIMATE2014’,‘POPESTIMATE2015’,‘POPESTIMATE2016’,‘POPESTIMATE2017’,‘POPESTIMATE2018’,‘POPESTIMATE2019’,‘ORIGIN’.</p></li>
@@ -196,9 +203,8 @@
 <li><p>The above steps are also followed for the population dataset from 2001 to 2010.</p></li>
 <li><p>Append (Rbind) the two datasets to get a final population dataset. Also change the name of the following columns so as to match the treatment dataset: AGE_CATEGORY,SEX,Year,NAME to AGE,GENDER,ADMYR,STFIPS respectively.</p></li>
 </ol>
-<p>The Preprocessing Script can be found here <a href="https://www.github.com/maheshjindal/us_drug_abuse_analytics/data-preprocessing.r">here</a></p>
+<p>Note: The Data Preprocessing Script can be found here <a href="https://www.github.com/maheshjindal/us_drug_abuse_analytics/data-preprocessing.r">here</a></p>
 
-</div>
 </div>
 </div>
             </section>

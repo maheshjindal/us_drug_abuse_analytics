@@ -22,7 +22,9 @@ library(scales)
 ```
 
 ```{r read_data2,echo = FALSE}
-load("data/tedsa_puf_2000_2019.RData")
+if(!exists("dataset"))
+    load("data/tedsa_puf_2000_2019.RData")
+
 final_population_data <- read.csv("data/population_data.csv")
 ```
 

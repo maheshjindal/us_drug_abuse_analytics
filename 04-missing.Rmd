@@ -4,6 +4,30 @@
 
 As we had a lot of data initially ~37M rows, we removed rows from each categorical variable, that were less in percentage. For more details, see the data transformation section [here](url). The following visualization gives information about missing data after the transformation:
 
+```{r missing_value_load_imports, echo = FALSE}
+library("rjson")
+library("dplyr")
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(choroplethr)
+library(statebins)
+library(maps)
+library(ggrepel)
+library(reshape2)
+library(viridis)
+library(ggthemes)
+library(gapminder)
+library(ggthemes)
+library(gganimate)
+library(ggmosaic)
+library(scales)
+load("data/tedsa_puf_2000_2019.RData")
+
+```
+
+
 ```{r missing_value_analysis,fig.height = 6,fig.width = 10, echo = FALSE}
 missing_value_patterns <- function(df, percent = TRUE) {
   df[df=="Missing"] <- NA
@@ -133,7 +157,6 @@ Observations:
 ## Understanding missing values pattern
 
 ```{r missing_pattern_analysis,fig.height = 6,fig.width = 10, echo = FALSE}
-library(patchwork)
 missing <- dataset %>% filter(EMPLOY == "Missing")
 missing_state <- missing %>% group_by(STFIPS) %>% summarise(`count` = n())
 missing_state['Percentage_of_rows'] <- (missing_state['count']/dim(missing)[1]) * 100 

@@ -87,13 +87,14 @@
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#subsetting-the-data"><i class="fa fa-check"></i><b>3.1</b> Subsetting the data</a>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#treatment-data"><i class="fa fa-check"></i><b>3.1</b> Treatment data</a></li>
+<li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#population-data"><i class="fa fa-check"></i><b>3.2</b> Population data</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="data-transformation.html"><a href="data-transformation.html#treatment-data"><i class="fa fa-check"></i><b>3.1.1</b> Treatment data</a></li>
-<li class="chapter" data-level="3.1.2" data-path="data-transformation.html"><a href="data-transformation.html#population-data"><i class="fa fa-check"></i><b>3.1.2</b> Population data</a></li>
+<li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#number-of-missing-attributes"><i class="fa fa-check"></i><b>4.1</b> Number of missing attributes</a></li>
+<li class="chapter" data-level="4.2" data-path="missing-values.html"><a href="missing-values.html#understanding-missing-values-pattern"><i class="fa fa-check"></i><b>4.2</b> Understanding missing values pattern</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#does-the-admissions-due-to-different-substance-vary-with-time"><i class="fa fa-check"></i><b>5.1</b> Does the admissions due to different substance vary with time?</a></li>
@@ -103,7 +104,8 @@
 <li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#section"><i class="fa fa-check"></i><b>5.5</b> </a></li>
 <li class="chapter" data-level="5.6" data-path="results.html"><a href="results.html#does-gender-play-a-role-in-admission-due-to-heroin-abuse-in-the-south-region"><i class="fa fa-check"></i><b>5.6</b> Does gender play a role in admission due to heroin abuse in the South region?</a></li>
 <li class="chapter" data-level="5.7" data-path="results.html"><a href="results.html#does-age-play-a-role-in-admission-due-to-heroin-abuse-in-the-south-region"><i class="fa fa-check"></i><b>5.7</b> Does age play a role in admission due to heroin abuse in the South region?</a></li>
-<li class="chapter" data-level="5.8" data-path="results.html"><a href="results.html#does-race-play-a-role-in-the-admission-due-to-heroin-abuse-in-the-south-region"><i class="fa fa-check"></i><b>5.8</b> Does race play a role in the admission due to heroin abuse in the South region?</a></li>
+<li class="chapter" data-level="5.8" data-path="results.html"><a href="results.html#does-employment-play-a-role-in-admission-due-to-substance-abuse"><i class="fa fa-check"></i><b>5.8</b> Does employment play a role in admission due to Substance abuse?</a></li>
+<li class="chapter" data-level="5.9" data-path="results.html"><a href="results.html#does-race-play-a-role-in-the-admission-due-to-heroin-abuse-in-the-south-region"><i class="fa fa-check"></i><b>5.9</b> Does race play a role in the admission due to heroin abuse in the South region?</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
@@ -231,14 +233,25 @@ Observations:</p>
 <li>District of Columbia(DC) shows an unusual trend. Unlike other states in the South region, DC has much more admissions from people belonging to higher age group.</li>
 </ol>
 <ul>
-<li>Why is there such a trend? Is it because th</li>
+<li>Why is there such a trend? Is it because the people who have retired are consuming more drugs?</li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li>There is no other apparent insight for other state and they all seem to behave similarly in terms of age group and admissions.</li>
 </ol>
 </div>
-<div id="does-race-play-a-role-in-the-admission-due-to-heroin-abuse-in-the-south-region" class="section level2" number="5.8">
-<h2><span class="header-section-number">5.8</span> Does race play a role in the admission due to heroin abuse in the South region?</h2>
+<div id="does-employment-play-a-role-in-admission-due-to-substance-abuse" class="section level2" number="5.8">
+<h2><span class="header-section-number">5.8</span> Does employment play a role in admission due to Substance abuse?</h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="864" />
+We picked “District of Columbia”,“Colorado”,“Delaware” and “Maryland” beacuse District of Columbia”,“Delaware” and “Maryland” are concerning areas with increasing Heroin trends.</p>
+<p>Observations:</p>
+<ol style="list-style-type: decimal">
+<li>Students in general are consuming more Marijuana as compared to other people.</li>
+<li>Retired people and unemployed people in the District of Columbia are consuming more drugs (including Heroin) as compared to other states with the same popualtion (Retired and unemployed).</li>
+<li>More unemployed people in Colorado are getting admitted due to Cocaine and Heroin as compared to other states with the same population (Unemployed).</li>
+</ol>
+</div>
+<div id="does-race-play-a-role-in-the-admission-due-to-heroin-abuse-in-the-south-region" class="section level2" number="5.9">
+<h2><span class="header-section-number">5.9</span> Does race play a role in the admission due to heroin abuse in the South region?</h2>
 <p><img src="finalproj_files/figure-html/race-1.png" width="768" />
 Obseravtions:</p>
 <ol style="list-style-type: decimal">
@@ -246,7 +259,7 @@ Obseravtions:</p>
 <li><p>The admission of white population due to Heroin have increased in both Delaware and Maryland.</p></li>
 <li><p>For district of Columbia, there is an increase in the admission of only Black population.</p></li>
 </ol>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="1920" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-10-1.png" width="960" /></p>
 
 </div>
 </div>
