@@ -12,6 +12,11 @@
 <body>
     <div>
         <h3>Consumption of Drugs Over the years for a paricular State in US</h3>
+        <label class="instructions instruction-heading">Instructions of Use:</label>
+        <ul class="instructions instruction-data">
+            <li>Select the desired state from the below dropdown for which Drug Consumption behaviour needs to be observed.</li>
+            <li>After selecting a particular state, this graph will show the propotion of the DRUGS consumption over the years.</li>
+        </ul>
         <label for="selected_state" class="option_label">State: </label>
         <select id="selected_state" class="select">
             <option>Choose the state</option>
@@ -21,9 +26,23 @@
     </div>
 
     <div>
-        <h3>Information of Drug Cases and Population (Years 2015 - 2020)</h3>
+        <h3>Information of Drug Cases and Population (Years 2015 - 2019)</h3>
+        <label class="instructions instruction-heading">Instructions of Use:</label>
+        <ul class="instructions instruction-data">
+            <li>Hover on the particular region of the map for which the drug stats needs to be analyzed.</li>
+            <li>The tooltip box on the left hand side depicts the <b>Total Population and Number of Cases</b> observed in that particular area over last five years.</li>
+            <li><em>Note: The darker region depics the fact there are more number of drug abuse cases. </em></li>
+        </ul>
         <div id="tooltip"></div>
         <svg width="960" height="600" id="statesvg"></svg>
+    </div>
+    <div class="references">
+        <h5>REFERENCES</h5>
+        <ul>
+            <li><cite><a href="https://datawanderings.com/2019/10/28/tutorial-making-a-line-chart-in-d3-js-v-5/">Making Line Charts</a> in d3 js</li>
+            <li><cite><a href="https://github.com/s10singh97/Influence_COVID/blob/main/resources/js/line.js">Influence_COVID </a></cite>Line Plot</li>
+            <li><cite><a href="http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922">USA States Map </a></cite> - D3</li>
+        </ul>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

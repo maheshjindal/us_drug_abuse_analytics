@@ -17,6 +17,8 @@ library(gapminder)
 library(ggthemes)
 library(gganimate)
 library(ggmosaic)
+library(scales)
+
 ```
 
 ```{r read_data2,echo = FALSE}
@@ -59,14 +61,9 @@ We need to see what has to to an increase in the cases of Heroin & Methamphetami
 2. The demographics of the consumption might have changed over time.
 3. The expenses required for the hospital might have increased for alcohol and cocaine and people due to report it except in cases of emergency.
 
-```{r }
+```{r echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
 
-dataset %>% ggplot() 
-+ aes(x = FREQ1, fill = GENDER) 
-+ geom_histogram(alpha =0.3,
-                 stat = "count",
-                 position = "identity") 
-+ theme_bw()
+dataset %>% ggplot() + aes(x = FREQ1, fill = GENDER) + geom_histogram(alpha =0.3, stat = "count",position = "identity") + theme_bw()
 
 ```
 
@@ -194,16 +191,10 @@ Observations:
 
 ```{r fig.height=8, fig.width=6,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
 
-dataset %>% ggplot() + aes(x = SERVICES, fill = SUB1)
-+ geom_histogram(alpha =0.3,
+dataset %>% ggplot() + aes(x = SERVICES, fill = SUB1)+ geom_histogram(alpha =0.3,
                  stat = "count",
-                 position = "dodge") 
-+ theme_bw() 
-+ theme(
-    axis.text.x = element_text(angle = 60, vjust = 0.5),
-    plot.title = element_text(hjust = 0.5, size = 10)
-                 ) 
-+ facet_wrap(~ REGION)
+                 position = "dodge") + theme_bw() + theme(axis.text.x = element_text(angle = 60, vjust = 0.5), plot.title = element_text(hjust = 0.5, size = 10)
+                 ) + facet_wrap(~ REGION)
 
 ```
 
@@ -234,11 +225,9 @@ df_filtered_cases_per_year_for_a_region_and_state_and_gender_drug <-
 
 ggplot(
   df_filtered_cases_per_year_for_a_region_and_state_and_gender_drug,
-  aes(x = STFIPS , y = Proportion_of_cases, fill = GENDER)
-) + geom_bar(stat = "identity",
+  aes(x = STFIPS , y = Proportion_of_cases, fill = GENDER)) + geom_bar(stat = "identity",
              width = .6,
-             position = "dodge")   +
-  coord_flip() +  theme_bw() + facet_wrap( ~ ADMYR) + ylab("States")+xlab("Proportion of cases")+ggtitle("Proportion of admission for each gender and sate facted by years") + labs(subtitle = 'Substance: Heroin') + theme(legend.position="top")
+             position = "dodge")   +coord_flip() +  theme_bw() + facet_wrap( ~ ADMYR) + ylab("States")+xlab("Proportion of cases")+ggtitle("Proportion of admission for each gender and sate facted by years") + labs(subtitle = 'Substance: Heroin') + theme(legend.position="top")
 
 ```
 Observations:
@@ -284,8 +273,6 @@ cases_per_year_for_a_region_and_state_and_age_drug <- cases_per_year_for_a_regio
 
 cases_per_year_for_a_region_and_state_and_age_drug$Proportion_of_cases <- cases_per_year_for_a_region_and_state_and_age_drug$Total_cases/cases_per_year_for_a_region_and_state_and_age_drug$Total_population
 
-
-
 ggplot(cases_per_year_for_a_region_and_state_and_age_drug %>% filter(REGION == 'South',SUB1 == 'Heroin'), aes(fill=AGE_CATEGORY, y=Proportion_of_cases, x=STFIPS, label = Proportion_of_cases)) + theme_bw() + scale_y_continuous(expand = c(0, 0), breaks = pretty_breaks()) +  theme(text = element_text(size=14)) +
     geom_bar(position="fill", stat="identity",width = 0.60) + scale_fill_brewer(palette="YlGnBu") + ylab("Proportion of cases")+xlab("States")+ggtitle("Proportion of admission for each age band and Southern state") + labs(subtitle = 'Substance: Heroin') + theme(legend.position="top") + guides(fill=guide_legend(title="AGE"))
 ```
@@ -298,7 +285,6 @@ Observations:
 2. There is no other apparent insight for other state and they all seem to behave similarly in terms of age group and admissions.
 
 ## Does race play a role in the admission due to heroin abuse in the South region?
-
 
 ```{r race,fig.height = 4,fig.width = 8,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
 cases_per_year_for_a_region_and_state_and_gender_race_drug <-
@@ -366,7 +352,7 @@ Obseravtions:
 3. For district of Columbia, there is an increase in the admission of only Black population.
 
 
-```{r fig.height = 10,fig.width = 20,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
+```{r fig.height = 10,fig.width = 10,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
 dataset_sub_filtered_edu_employ <- dataset %>% group_by(ADMYR,AGE,SUB1,REGION,STFIPS,GENDER,RACE,EDUC,EMPLOY) %>% summarise(Total_cases = sum(`count`))
 
 population_grouped_data <- final_population_data %>% group_by(ADMYR,REGION,STFIPS,GENDER,RACE) %>% summarise(Total_population = sum(`Population_count`))
@@ -375,6 +361,7 @@ tmpds <- merge(dataset_sub_filtered_edu_employ,population_grouped_data,by=c("ADM
 
 dataset_sub_filtered_edu_employ$Proportion_of_cases <- dataset_sub_filtered_edu_employ$Total_cases/tmpds$Total_population
 
-ggplot(data = dataset_sub_filtered_edu_employ) + geom_mosaic(aes(x=product(SUB1,EDUC), fill = AGE), divider=ddecker()) + scale_alpha_manual(values =c(.7,.9)) + theme(axis.text=element_text(size=12),axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5),plot.title = element_text(hjust = 0.5,size=20), strip.text = element_text(size=13), legend.key.width = unit(2.5, "cm"),legend.key.height = unit(1.5, "cm"), legend.key.size = unit(0.8, "cm")) + labs(x=NULL, y=NULL, title="Impact of Education and Age on the Drugs")+  theme_hc()
+ggplot(data = dataset_sub_filtered_edu_employ) + geom_mosaic(aes(x=product(SUB1,EDUC), fill = AGE), divider=ddecker()) + scale_alpha_manual(values =c(.7,.9)) + ggtitle("Impact of Education and Age on the Drugs") + theme(axis.text=element_text(size=12),axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5),plot.title = element_text(hjust = 0.5,size=20), strip.text = element_text(size=13), legend.key.width = unit(2.5, "cm"),legend.key.height = unit(1.5, "cm"), legend.key.size = unit(0.8, "cm")) + theme_hc()
+
 
 ```

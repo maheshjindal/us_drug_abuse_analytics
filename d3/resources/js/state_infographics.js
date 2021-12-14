@@ -6,7 +6,7 @@ let margin = {
 }
 let timeParser = d3.timeParse("%Y");
 
-d3.csv("data/drug_abuse_cases_demographics_grouped.csv")
+d3.csv("https://raw.githubusercontent.com/maheshjindal/us_drug_abuse_analytics/main/d3/data/drug_abuse_cases_demographics_grouped.csv")
   .then(function(input) {
       const data = []
       for (var i = 0; i < input.length; i++) {

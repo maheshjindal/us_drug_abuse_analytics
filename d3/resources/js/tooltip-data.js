@@ -8,7 +8,7 @@ function tooltipHtml(n, d) {
         "</table>";
 }
 
-d3.csv("data/state_population_infographics.csv")
+d3.csv("https://raw.githubusercontent.com/maheshjindal/us_drug_abuse_analytics/main/d3/data/state_population_infographics.csv")
     .then(function(input) {
         data = []
         for (var i = 0; i < input.length; i++) {

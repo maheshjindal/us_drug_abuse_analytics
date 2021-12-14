@@ -172,3 +172,17 @@ svg {
 #tooltip tr td:nth-child(2) {
 	text-align: center;
 }
+
+.instructions {
+	font-family: 'Roboto', 'Times New Roman', Times, serif;
+	color: #333333;
+	font-weight: 400;
+	font-size: 1em;
+}
+label.instruction-heading{
+	text-transform: uppercase;
+	font-weight: 500;
+}
+label.instruction-data{
+	font-family: Georgia, 'Times New Roman', Times, serif;
+}
