@@ -149,7 +149,7 @@ svg {
 	font-size: 10px;
 	width: auto;
 	padding: 4px;
-	color: white;
+	color: #00008B;
 	opacity: 0;
 	font-family: 'Roboto', 'Times New Roman', Times, serif;
 }
@@ -162,7 +162,7 @@ svg {
 #tooltip tr td {
 	padding: 0;
 	margin: 0;
-	color: #fff;
+	color: #00008B;
 }
 
 #tooltip tr td:nth-child(1) {

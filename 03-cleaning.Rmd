@@ -15,31 +15,31 @@ Steps followed for cleaning the Treatment data:
 
 2. According to data dictionary, the values in each column represnted something so for each variable we transformed the data to the original meaning by creating and using the following [json](https://github.com/maheshjindal/us_drug_abuse_analytics/blob/main/data/treatment_data.json).
 <br>
-*2.1. AGE -> "1": "12–14", "2": "15–17", "3": "18–20","4": "21–24", "5": "25–29", "6": "30–34", "7": "35–39", "8": "40–44", "9": "45–49", "10": "50–54", "11": "55–64", "12": "65+"*
+_ *AGE -> "1": "12–14", "2": "15–17", "3": "18–20","4": "21–24", "5": "25–29", "6": "30–34", "7": "35–39", "8": "40–44", "9": "45–49", "10": "50–54", "11": "55–64", "12": "65+"*
 
-*2.2. ADMYR -> "2000","2001","2002","2003","2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"*
+- *ADMYR -> "2000","2001","2002","2003","2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"*
 
-*2.3. GENDER -> "1": "Male","2": "Female", "-9": "Missing"*
+- *GENDER -> "1": "Male","2": "Female", "-9": "Missing"*
 
-*2.4. RACE -> "1": "Alaska Native","2": "American Indian","3": "Asian or Pacific Islander","4": "Black or African American","5": "White","6": "Asian","7": "Other single race","8": "Two or more races","9": "Native Hawaiian or Other Pacific Islander","-9": "Missing"*
+- *RACE -> "1": "Alaska Native","2": "American Indian","3": "Asian or Pacific Islander","4": "Black or African American","5": "White","6": "Asian","7": "Other single race","8": "Two or more races","9": "Native Hawaiian or Other Pacific Islander","-9": "Missing"*
 
-*2.5. EDUC -> "1": "Less than one school grade, no schooling, nursery school, or kindergarten to Grade 8","2": "Grades 9 to 11","3": "Grade 12","4": "1-3 years of college","5": "4 years of college","-9": "Missing"*
+- *EDUC -> "1": "Less than one school grade, no schooling, nursery school, or kindergarten to Grade 8","2": "Grades 9 to 11","3": "Grade 12","4": "1-3 years of college","5": "4 years of college","-9": "Missing"*
 
-*2.6. EMPLOY -> "1": "Full-time","2": "Part-time","3": "Unemployed","4": "Not in labor force","-9": "Missing"*
+- *EMPLOY -> "1": "Full-time","2": "Part-time","3": "Unemployed","4": "Not in labor force","-9": "Missing"*
 
-*2.7. STFIPS -> "1": "Alabama","2": "Alaska","4": "Arizona","5": "Arkansas","6": "California","8": "Colorado","9": "Connecticut","10": "Delaware","11": "District of Columbia","12": "Florida","13": "Georgia","15": "Hawaii","16": "Idaho","17": "Illinois","18": "Indiana","19": "Iowa","20": "Kansas","21": "Kentucky","22": "Louisiana","23": "Maine","24": "Maryland","25": "Massachusetts","26": "Michigan","27": "Minnesota","28": "Mississippi","29": "Missouri","30": "Montana","31": "Nebraska","32": "Nevada","33": "New Hampshire","34": "New Jersey","35": "New Mexico","36": "New York","37": "North Carolina","38": "North Dakota","39": "Ohio","40": "Oklahoma","41": "Oregon","42": "Pennsylvania","44": "Rhode Island","45": "South Carolina","46": "South Dakota","47": "Tennessee","48": "Texas","49": "Utah","50": "Vermont","51": "Virginia","53": "Washington","54": "West Virginia","55": "Wisconsin","56": "Wyoming","72": "Puerto Rico"*
+- *STFIPS -> "1": "Alabama","2": "Alaska","4": "Arizona","5": "Arkansas","6": "California","8": "Colorado","9": "Connecticut","10": "Delaware","11": "District of Columbia","12": "Florida","13": "Georgia","15": "Hawaii","16": "Idaho","17": "Illinois","18": "Indiana","19": "Iowa","20": "Kansas","21": "Kentucky","22": "Louisiana","23": "Maine","24": "Maryland","25": "Massachusetts","26": "Michigan","27": "Minnesota","28": "Mississippi","29": "Missouri","30": "Montana","31": "Nebraska","32": "Nevada","33": "New Hampshire","34": "New Jersey","35": "New Mexico","36": "New York","37": "North Carolina","38": "North Dakota","39": "Ohio","40": "Oklahoma","41": "Oregon","42": "Pennsylvania","44": "Rhode Island","45": "South Carolina","46": "South Dakota","47": "Tennessee","48": "Texas","49": "Utah","50": "Vermont","51": "Virginia","53": "Washington","54": "West Virginia","55": "Wisconsin","56": "Wyoming","72": "Puerto Rico"*
 
-*2.8. REGION -> "0": "U.S. territories","1": "Northeast","2": "Midwest","3": "South","4": "West"*
+- *REGION -> "0": "U.S. territories","1": "Northeast","2": "Midwest","3": "South","4": "West"*
 
-*2.9. DIVISION -> "0": "U.S. territories","1": "New England","2": "Middle Atlantic","3": "East North Central","4": "West North Central","5": "South Atlantic","6": "East South Central","7": "West South Central","8": "Mountain","9": "Pacific"*
+- *DIVISION -> "0": "U.S. territories","1": "New England","2": "Middle Atlantic","3": "East North Central","4": "West North Central","5": "South Atlantic","6": "East South Central","7": "West South Central","8": "Mountain","9": "Pacific"*
 
-*2.10. SERVICES -> "1": "Detox, 24-hour, hospital inpatient","2": "Detox, 24-hour, free-standing residential","3": "Rehab/residential, hospital (non-detox)","4": "Rehab/residential, short term (30 days or fewer)","5": "Rehab/residential, long term (more than 30 days)","6": "Ambulatory, intensive outpatient","7": "Ambulatory, non-intensive outpatient","8": "Ambulatory, detoxification"*
+- *SERVICES -> "1": "Detox, 24-hour, hospital inpatient","2": "Detox, 24-hour, free-standing residential","3": "Rehab/residential, hospital (non-detox)","4": "Rehab/residential, short term (30 days or fewer)","5": "Rehab/residential, long term (more than 30 days)","6": "Ambulatory, intensive outpatient","7": "Ambulatory, non-intensive outpatient","8": "Ambulatory, detoxification"*
 
-*2.11. SUB1 -> "1": "None","2": "Alcohol","3": "Cocaine","4": "Marijuana","5": "Heroin","6": "Non-prescription","7": "Other opiates and synthetics","8": "PCP","9": "Hallucinogens","10": "Methamphetamine","11": "Other amphetamines","12": "Other stimulants","13": "Benzodiazepines","14": "Other tranquilizers","15": "Barbiturates","16": "Other sedatives or hypnotics","17": "Inhalants","18": "Over-the-counter medications","19": "Other drugs","-9": "Missing"*
+- *SUB1 -> "1": "None","2": "Alcohol","3": "Cocaine","4": "Marijuana","5": "Heroin","6": "Non-prescription","7": "Other opiates and synthetics","8": "PCP","9": "Hallucinogens","10": "Methamphetamine","11": "Other amphetamines","12": "Other stimulants","13": "Benzodiazepines","14": "Other tranquilizers","15": "Barbiturates","16": "Other sedatives or hypnotics","17": "Inhalants","18": "Over-the-counter medications","19": "Other drugs","-9": "Missing"*
 
-*2.12. ROUTE1 -> "1": "Oral","2": "Smoking","3": "Inhalation","4": "Injection","5": "Other","-9": "Missing"*
+- *ROUTE1 -> "1": "Oral","2": "Smoking","3": "Inhalation","4": "Injection","5": "Other","-9": "Missing"*
 
-*2.13. FREQ1 -> "1": "No use in the past month","2": "Some use","3": "Daily use","-9": "Missing"*
+- *FREQ1 -> "1": "No use in the past month","2": "Some use","3": "Daily use","-9": "Missing"*
 
 *"DETNLF" -> "1": "Homemaker", "2": "Student", "3": "Retired, disabled", "4": "Resident of institution", "5": "Other", "-9": "Missing"*
 
@@ -85,38 +85,37 @@ For population data 2010 to 2019.
 3. According to data dictionary, the values in each column represented something so for each variable we transformed the data to the original meaning by creating and using the following [json](https://github.com/maheshjindal/us_drug_abuse_analytics/blob/main/data/population_data.json).
 
 
+- *SEX -> "0": "Total","1": "Male","2": "Female"*
 
-*2.1. SEX -> "0": "Total","1": "Male","2": "Female"*
+- *RACE -> "1": "White","2": "Black or African American","3": "American Indian or Alaska Native Alone","4": "Asian","5": "Native Hawaiian or Other Pacific Islander","6": "Two or more races"*
 
-*2.2. RACE -> "1": "White","2": "Black or African American","3": "American Indian or Alaska Native Alone","4": "Asian","5": "Native Hawaiian or Other Pacific Islander","6": "Two or more races"*
+- *REGION -> "1": "Northeast","2": "Midwest","3": "South","4": "West"*
 
-*2.3. REGION -> "1": "Northeast","2": "Midwest","3": "South","4": "West"*
+- *DIVISION -> "1": "New England","2": "Middle Atlantic","3": "East North Central","4": "West North Central","5": "South Atlantic","6": "East South Central","7": "West South Central","8": "Mountain","9": "Pacific"*
 
-*2.4. DIVISION -> "1": "New England","2": "Middle Atlantic","3": "East North Central","4": "West North Central","5": "South Atlantic","6": "East South Central","7": "West South Central","8": "Mountain","9": "Pacific"*
+- *NAME -> Name of each state*
 
-*2.5. NAME -> Name of each state*
+- *AGE -> numerical variable ranging from 0 to 85*
 
-*2.6. AGE -> numerical variable ranging from 0 to 85*
+- *POPESTIMATE2010 -> Estimated population of 2010*
 
-*2.7. POPESTIMATE2010 -> Estimated population of 2010
+- *POPESTIMATE2011 -> Estimated population of 2011*
 
-*2.8. POPESTIMATE2011 -> Estimated population of 2011
+- *POPESTIMATE2012 -> Estimated population of 2012*
 
-*2.9. POPESTIMATE2012 -> Estimated population of 2012
+- *POPESTIMATE2013 -> Estimated population of 2013*
 
-*2.10. POPESTIMATE2013 -> Estimated population of 2013
+- *POPESTIMATE2014 -> Estimated population of 2014*
 
-*2.11. POPESTIMATE2014 -> Estimated population of 2014
+- *POPESTIMATE2015 -> Estimated population of 2015*
 
-*2.12. POPESTIMATE2015 -> Estimated population of 2015
+- *POPESTIMATE2016 -> Estimated population of 2016*
 
-*2.13. POPESTIMATE2016 -> Estimated population of 2016
+- *POPESTIMATE2017 -> Estimated population of 2017*
 
-*2.14. POPESTIMATE2017 -> Estimated population of 2017
+- *POPESTIMATE2018 -> Estimated population of 2018*
 
-*2.15. POPESTIMATE2018 -> Estimated population of 2018
-
-*2.16. POPESTIMATE2019 -> Estimated population of 2019
+- *POPESTIMATE2019 -> Estimated population of 2019*
 
 4. Remove Sex = 'Total', as want to look at the subcategories male and female.
 
