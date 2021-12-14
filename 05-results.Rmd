@@ -82,7 +82,7 @@ ggplot(cases_per_year_for_a_region_and_drug) +
  aes(x = ADMYR, y = Proportion_of_cases, color = SUB1,group = SUB1) + facet_wrap(~REGION)+
  geom_line() +
  scale_fill_hue(direction = 1) + scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
- theme_bw()+ylab("Proportion of cases")+ggtitle("Year vs Proportions of admissions for each substance faceted by region")+
+ theme_bw()+ylab("Proportion of cases")+xlab("")+ggtitle("Year vs Proportions of admissions for each substance faceted by region")+
   theme(plot.title = element_text(hjust = 0.5),axis.text.x = element_text(angle = 60, hjust = 1, vjust = .5)) + labs(color = "Substance")
 ```
 Observations:
@@ -164,7 +164,7 @@ cases_per_year_for_a_region_and_state_drug <-
 ggplot(data = cases_per_year_for_a_region_and_state_drug[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'),],mapping = aes(x = ADMYR, y = Proportion_of_cases)) +
   geom_line(mapping = aes(group = STFIPS), alpha = 0.5) + 
   geom_smooth(formula = y ~ x, method = "loess",mapping = aes(group = REGION),se = FALSE) + 
-  geom_text_repel(data =subset(cases_per_year_for_a_region_and_state_drug[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'),],ADMYR == '2019'),mapping = aes(x = ADMYR, y = Proportion_of_cases, label = abbrev),size = 3, segment.color = NA, nudge_x = 30) + facet_wrap(~REGION, nrow  = 3) + theme_bw() + ylab("Proportion of cases")+ggtitle("Year vs Proportions of admissions for each state faceted by region") + labs(subtitle = 'Substance: Heroin') + theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = .5))
+  geom_text_repel(data =subset(cases_per_year_for_a_region_and_state_drug[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'),],ADMYR == '2019'),mapping = aes(x = ADMYR, y = Proportion_of_cases, label = abbrev),size = 3, segment.color = NA, nudge_x = 30) + facet_wrap(~REGION, nrow  = 3) + theme_bw() + ylab("Proportion of cases")+xlab("")+ggtitle("Year vs Proportions of admissions for each state faceted by region") + labs(subtitle = 'Substance: Heroin') + theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = .5))
 ```
 
 As the unnatural spikes in the trend of Maryland and Delaware, we might not be able to decipher trends in other states. So removing Maryland and Delware (outliers) to understand the trends better.
@@ -174,7 +174,7 @@ cases_per_year_for_a_region_and_state_drug_filtered <- cases_per_year_for_a_regi
 ggplot(data = cases_per_year_for_a_region_and_state_drug_filtered[which(cases_per_year_for_a_region_and_state_drug_filtered$SUB1 == 'Heroin'),],mapping = aes(x = ADMYR, y = Proportion_of_cases)) +
   geom_line(mapping = aes(group = STFIPS), alpha = 0.5) + 
   geom_smooth(formula = y ~ x, method = "loess",mapping = aes(group = REGION),se = FALSE) + 
-  geom_text_repel(data =subset(cases_per_year_for_a_region_and_state_drug_filtered[which(cases_per_year_for_a_region_and_state_drug_filtered$SUB1 == 'Heroin'),],ADMYR == '2019'),mapping = aes(x = ADMYR, y = Proportion_of_cases, label = abbrev),size = 3, segment.color = NA, nudge_x = 30) + facet_wrap(~REGION, nrow  = 3) + theme_bw() + ylab("Proportion of cases")+ggtitle("Year vs Proportions of admissions for each state faceted by region") + labs(subtitle = 'Substance: Heroin') + theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = .5))
+  geom_text_repel(data =subset(cases_per_year_for_a_region_and_state_drug_filtered[which(cases_per_year_for_a_region_and_state_drug_filtered$SUB1 == 'Heroin'),],ADMYR == '2019'),mapping = aes(x = ADMYR, y = Proportion_of_cases, label = abbrev),size = 3, segment.color = NA, nudge_x = 30) + facet_wrap(~REGION, nrow  = 3) + theme_bw() + ylab("Proportion of cases")+xlab("")+ggtitle("Year vs Proportions of admissions for each state faceted by region") + labs(subtitle = 'Substance: Heroin') + theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = .5))
 ```
 Observations:
 
@@ -301,6 +301,7 @@ tmpds2 <- tmpds %>% filter(STFIPS %in% c("District of Columbia","Colorado","Dela
 ggplot(data = tmpds2 %>% filter(EMPLOY != 'Missing')) + geom_mosaic(aes(x=product(STFIPS,SUB1), fill = EMPLOY), divider=ddecker()) + theme(axis.text.x = element_text(angle = 90)) + labs(title="Substance and States vs Employment status") + ylab("Employment Status")+xlab("States & substance") + theme_hc() + guides(fill = guide_legend(reverse = TRUE,title="Employment Status"))
 ```
 *Note: The label on the x-axis is getting overlapped for metaphorine drug due to the fact that number of people admitted due to metaphorine are very less and it will lead to overlapping of x axis labels with any combination of height and width.*
+<br/>
 We picked "District of Columbia","Colorado","Delaware" and "Maryland" beacuse District of Columbia","Delaware" and "Maryland" are concerning areas with increasing Heroin trends.
 
 Observations:
