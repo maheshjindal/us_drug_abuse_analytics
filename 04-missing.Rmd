@@ -1,1 +1,153 @@
 # Missing values
+
+## Number of missing attributes
+
+As we had a lot of data initially ~37M rows, we removed rows from each categorical variable, that were less in percentage. For more details, see the data transformation section [here](url). The following visualization gives information about missing data after the transformation:
+
+```{r missing_value_analysis,fig.height = 6,fig.width = 10, echo = FALSE}
+missing_value_patterns <- function(df, percent = TRUE) {
+  df[df=="Missing"] <- NA
+  if (percent == TRUE) {
+    var = 100 / dim(df)[1]
+    y_label = "% rows missing"
+    x_label = "Percentage of rows"
+  }
+  else
+  {
+    var = 1
+    y_label = "rows missing"
+    x_label = "rows count"
+  }
+  
+  missing_patterns <- data.frame(is.na(df)) %>%
+    group_by_all() %>%
+    count(name = "count", sort = TRUE) %>%
+    ungroup()
+  
+  missing_patterns <-
+    missing_patterns %>% mutate(missing_pattern = seq(1, dim(missing_patterns)[1]))
+  
+  missing_patterns$complete_case <-
+    missing_patterns[, -c(dim(missing_patterns)[2] - 1, dim(missing_patterns)[2]), drop = FALSE] %>% rowSums()
+  
+  missing_patterns$complete_case <-
+    !as.logical(missing_patterns$complete_case)
+  
+  missing_patterns_pivot <-
+    missing_patterns %>% select(-c(count)) %>% pivot_longer(!c(missing_pattern, complete_case),
+                                                            names_to = 'variable',
+                                                            values_to = 'value')
+  
+  column_wise = data.frame(na_count = colSums(is.na(df)))
+  column_wise$variable = row.names(column_wise)
+  
+  order_of_variables = column_wise %>% arrange(desc(na_count)) %>% pull(variable)
+  
+  p1 <-
+    ggplot(column_wise, aes(
+      x = factor(variable, levels = order_of_variables),
+      y = na_count * var
+    )) + geom_bar(stat = 'identity',
+                  fill = '#98B7F3',
+                  alpha = 0.6) + xlab('') + ylab(y_label) + theme_bw() + theme(panel.grid.major.x = element_blank())  +   theme(axis.text.x = element_text(angle = 60),
+                                                                                                                                plot.title = element_text(hjust = 0.5))
+  
+  if (percent == TRUE) {
+    p1 <-
+      p1 + scale_y_continuous(
+        expand = c(0, 0),
+        breaks = pretty_breaks(),
+        limits = c(0, 100)
+      )
+  }
+  else
+  {
+    p1 <-
+      p1 + scale_y_continuous(expand = c(0, 0), breaks = pretty_breaks())
+  }
+  
+  
+  p2 <-
+    ggplot(missing_patterns_pivot,
+           aes(
+             factor(variable, levels = order_of_variables),
+             factor(reorder(
+               missing_pattern, desc(missing_pattern)
+             )),
+             fill = value,
+             alpha = complete_case
+           )) + geom_tile(color = "white") + scale_y_discrete(expand = c(0, 0)) + scale_x_discrete(expand = c(0, 0)) + theme_bw() + theme (
+             legend.position = "None",
+             panel.grid.major.x = element_blank(),
+             panel.grid.major.y = element_blank()
+           ) + scale_fill_manual(values = c("#CBCBCB", "#B69EE6")) + ylab('missing pattern') + xlab('variable') + scale_alpha_manual(values = c(0.6, 1)) + geom_text(
+             x = floor(dim(column_wise)[1] / 2),
+             y = dim(missing_patterns)[1] + 1 - missing_patterns[missing_patterns$complete_case == TRUE, "missing_pattern"] %>% pull(),
+             label = "Complete cases",
+             size = 3
+           )  +   theme(axis.text.x = element_text(angle = 60),
+                        plot.title = element_text(hjust = 0.5))
+  
+  p3 <-
+    ggplot(missing_patterns,
+           aes(
+             y = factor(reorder(
+               missing_pattern, desc(missing_pattern)
+             )),
+             x = count * var,
+             alpha = complete_case
+           )) + geom_bar(stat = 'identity', fill = '#98B7F3') + ylab('') + xlab(x_label) +
+    theme_bw() + theme(panel.grid.major.y = element_blank(),
+                       legend.position = "None") + scale_alpha_manual(values = c(0.6, 1)) + scale_y_discrete(expand = c(0, 0))  +   theme(axis.text.x = element_text(angle = 60),
+                                                                                                                                          plot.title = element_text(hjust = 0.5))
+  
+  if (percent == TRUE) {
+    p3 <-
+      p3 + scale_x_continuous(
+        expand = c(0, 0),
+        breaks = pretty_breaks(),
+        limits = c(0, 100)
+      )
+  }
+  else
+  {
+    p3 <-
+      p3 + scale_x_continuous(expand = c(0, 0), breaks = pretty_breaks())
+  }
+  
+  
+  p1 + plot_spacer() + p2 + p3 + plot_layout(
+    nrow = 2,
+    ncol = 2,
+    widths = c(8, 2),
+    heights = c(2, 8)
+  ) + plot_annotation(title = 'Missing value patterns')
+}
+
+missing_value_patterns(dataset)
+```
+Observations:
+
+1. Only the Employment column seem to be missing values. About 10% of rows in the data seem to have missing value for this column. We feel 10% is a lot of data to be removed directly and it might still hold information. For example: The information is missing for a particular state or year etc.
+
+## Understanding missing values pattern
+
+```{r missing_pattern_analysis,fig.height = 6,fig.width = 10, echo = FALSE}
+library(patchwork)
+missing <- dataset %>% filter(EMPLOY == "Missing")
+missing_state <- missing %>% group_by(STFIPS) %>% summarise(`count` = n())
+missing_state['Percentage_of_rows'] <- (missing_state['count']/dim(missing)[1]) * 100 
+g1 <- ggplot(missing_state[1:20, ], aes(x = Percentage_of_rows, y = reorder(STFIPS, Percentage_of_rows))) + geom_point() + labs(x = 'Percentage of Missing Value', y = "State", title = "Percentage of missing employment data by states") + theme_bw()
+
+missing_year <- missing %>% group_by(ADMYR) %>% summarise(`count` = n())
+missing_year['Percentage_of_rows'] <- (missing_year['count']/dim(missing)[1]) * 100 
+g2 <- ggplot(missing_year[1:20, ], aes(x = Percentage_of_rows, y = ADMYR)) + geom_point() + labs(x = 'Percentage of Missing Value', y = "Year", title = "Percentage of missing employment data by years") + theme_bw()
+g1+g2
+```
+Onservations:
+
+1. The Employment data was missing during the early 2000's. The recent data has information about employment.
+2. The state of California account for 30% of the missing data. This is much larger than any other state.
+
+
+

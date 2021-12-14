@@ -20,7 +20,7 @@ We looked and explored for other data sources as well. There is no source which 
 
 All the data collected was given in the csv format. 
 
-The treatment dataset initially contained 37558015 rows and 62 columns. After the preprocessing it got reduced to . To understand the data transformation done to achieve this. Please click here. The data dictionary along with an understanding of variables can be found [here](https://www.datafiles.samhsa.gov/sites/default/files/field-uploads-protected/studies/TEDS-A-2000-2019/TEDS-A-2000-2019-datasets/TEDS-A-2000-2019-DS0001/TEDS-A-2000-2019-DS0001-info/TEDS-A-2000-2019-DS0001-info-codebook_v1.pdf).
+The treatment dataset initially contained 37558015 rows and 62 columns. After the preprocessing it got reduced to 9493737 rows and 14 columns. The data transformations done to achieve this can be found [here](url). The data dictionary along with an understanding of variables can be found [here](https://www.datafiles.samhsa.gov/sites/default/files/field-uploads-protected/studies/TEDS-A-2000-2019/TEDS-A-2000-2019-datasets/TEDS-A-2000-2019-DS0001/TEDS-A-2000-2019-DS0001-info/TEDS-A-2000-2019-DS0001-info-codebook_v1.pdf).
 
 The combined population data contained 394740 rows and 21 columns. The data dictionary along with an understanding of variables can be found [here](https://www2.census.gov/programs-surveys/popest/technical-documentation/file-layouts/2000-2010/sc-est2010-alldata6.pdf).
 

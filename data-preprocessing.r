@@ -15,7 +15,7 @@ library(rjson)
 
 tedsa_puf_2000_2019 <- read.csv("data/tedsa_puf_2000_2019.csv")
 
-tedsa_puf_2000_2019 <- tedsa_puf_2000_2019 %>% select(AGE, ADMYR, GENDER, RACE, EDUC,STFIPS,REGION,DIVISION,SERVICES,SUB1,ROUTE1,FREQ1)
+tedsa_puf_2000_2019 <- tedsa_puf_2000_2019 %>% select(AGE, ADMYR, GENDER, RACE, EMPLOY,EDUC,STFIPS,REGION,DIVISION,SERVICES,SUB1,ROUTE1,FREQ1,DETNLF)
 metadataJSONPath <- 'data/smetadata.json'
 metadata <- fromJSON(file=metadataJSONPath)
 
@@ -65,6 +65,10 @@ tedsa_puf_2000_2019 <- tedsa_puf_2000_2019 %>% filter(ROUTE1 %in% a$ROUTE1[1:4])
 a <- tedsa_puf_2000_2019 %>% group_by(FREQ1) %>% summarise(No_of_rows = n()) %>%
   mutate(Percentage = round(No_of_rows / sum(No_of_rows), 3) * 100) %>% 
   arrange(desc(Percentage))
+
+tedsa_puf_2000_2019$EMPLOY[tedsa_puf_2000_2019$EMPLOY == 'Not in labor force'] <- tedsa_puf_2000_2019$DETNLF[tedsa_puf_2000_2019$EMPLOY == 'Not in labor force'] 
+
+tedsa_puf_2000_2019 <- tedsa_puf_2000_2019 %>% select(-DETNLF)
 
 tedsa_puf_2000_2019 <- tedsa_puf_2000_2019 %>% filter(FREQ1 %in% a$FREQ1[1:3])
 

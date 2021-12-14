@@ -132,7 +132,7 @@ cases_per_year_for_a_region_and_state_drug %>%
   filter(SUB1 == 'Heroin') %>% 
   group_by(Year,state) %>% 
   summarise(value = mean(Proportion_of_cases), .groups = 'drop') %>% 
-  ggplot(aes(state = state,fill = value)) + geom_statebins() + facet_wrap(~Year) + theme_bw() + ggtitle("Proportion of admissions for state across time")+ labs(subtitle = 'Substance: Heroin') + theme(axis.text.x = element_blank(),axis.text.y = element_blank(),axis.ticks = element_blank()) + guides(fill = guide_legend(reverse = TRUE)) + scale_fill_viridis(option="mako" ,name = "Proportion of Admission", direction = -1) + theme(legend.position="top")
+  ggplot(aes(state = state,fill = value)) + geom_statebins() + facet_wrap(~Year) + theme_bw() + ggtitle("Proportion of admissions for state across time")+ labs(subtitle = 'Substance: Heroin') + theme(axis.text.x = element_blank(),axis.text.y = element_blank(),axis.ticks = element_blank()) + scale_fill_viridis(option="mako" ,name = "Proportion of Admission", direction = -1) + theme(legend.position="top")
 
   
 ```
@@ -280,9 +280,39 @@ ggplot(cases_per_year_for_a_region_and_state_and_age_drug %>% filter(REGION == '
 Observations:
 
 1. District of Columbia(DC) shows an unusual trend. Unlike other states in the South region, DC has much more admissions from people belonging to higher age group.
-  - Why is there such a trend? Is it because th
+  - Why is there such a trend? Is it because the people who have retired are consuming more drugs?
 
 2. There is no other apparent insight for other state and they all seem to behave similarly in terms of age group and admissions.
+
+## Does employment play a role in admission due to Substance abuse?
+
+
+```{r fig.height = 6,fig.width = 9}
+
+options(dplyr.summarise.inform = FALSE)
+
+tmpds <- dataset %>% group_by(ADMYR,AGE,SUB1,REGION,STFIPS,GENDER,RACE,EDUC,EMPLOY) %>% summarise(Total_cases = sum(`count`))
+
+pp <- final_population_data %>% group_by(ADMYR,REGION,STFIPS,GENDER,RACE) %>% summarise(Total_population = sum(`Population_count`))
+
+tmpds <- merge(tmpds,pp,by=c("ADMYR","REGION","STFIPS","GENDER","RACE"),all.x=TRUE)
+
+tmpds$Proportion_of_cases <- tmpds$Total_cases/tmpds$Total_population
+
+tmpds2 <- tmpds %>% filter(STFIPS %in% c("District of Columbia","Colorado","Delaware","Maryland"))
+
+
+
+ggplot(data = tmpds2 %>% filter(EMPLOY != 'Missing')) + geom_mosaic(aes(x=product(STFIPS,SUB1), fill = EMPLOY), divider=ddecker()) + scale_alpha_manual(values =c(.7,.9)) + theme(axis.text=element_text(size=12),axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5),plot.title = element_text(hjust = 0.5,size=20), strip.text = element_text(size=13), legend.key.width = unit(2.5, "cm"),legend.key.height = unit(1.5, "cm"), legend.key.size = unit(0.8, "cm")) + labs(title="Substance and States vs Employment status") + ylab("Employment Status")+xlab("States & substance") + theme_hc() +  theme(legend.position="right") + guides(fill = guide_legend(reverse = TRUE,title="Employment Status"))
+```
+We picked "District of Columbia","Colorado","Delaware" and "Maryland" beacuse District of Columbia","Delaware" and "Maryland" are concerning areas with increasing Heroin trends.
+
+Observations:
+
+1. Students in general are consuming more Marijuana as compared to other people.
+2. Retired people and unemployed people in the District of Columbia are consuming more drugs (including Heroin) as compared to other states with the same popualtion (Retired and unemployed).
+3. More unemployed people in Colorado are getting admitted due to Cocaine and Heroin as compared to other states with the same population (Unemployed).
+
 
 ## Does race play a role in the admission due to heroin abuse in the South region?
 
