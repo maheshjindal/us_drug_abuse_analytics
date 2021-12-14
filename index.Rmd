@@ -10,18 +10,18 @@ This project focuses on the Data Analysis of the DRUG ABUSE BEHAVIOUR OVER UNITE
 
 The use of drugs is pernicious to humans with respect to the health and society.  It can harm brain and body, sometimes permanently. It can hurt the people in the surroundings including friends, families, kids, and unborn babies. Drug use can also lead to addiction. Due to substancial increase in drug consumption, its very important to analyse the factors leading to this situation as abating down this problem could help in reducing distress among people, improving their health and lives in the future.
 
-## We are targetting to focus on the following concern areas
+**We are targetting** to focus on the following concern areas
 * What is the drug consumption behaviour over different regions in the united states?
 * What demographic factors are involved which lead to the rise of this problem?
 * What are the several factors of human personal development eg. Education, Source of Income etc. which might be the indirect factors impacting on this problem? 
 
-### While working on this project, we have followed a general Exploratory Data Analysis Paradigm i.e:
+**While working on this project**, we have followed a general Exploratory Data Analysis Paradigm i.e:
 1. Data Extraction
 2. Data Preprocessing and Cleaning
 3. Data Analyzation (Including Static and Interactive Components)
 4. Data Inference and Conclusion
 
-#### Programming Languages Used
+**Programming Languages Used**
 - R
 - Javascript
 - CSS

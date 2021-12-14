@@ -27,7 +27,8 @@ if(!exists("dataset"))
 
 final_population_data <- read.csv("data/population_data.csv")
 ```
-
+<br><br><br><br>
+<br>
 ## Does the admissions due to different substance vary with time?
 
 ```{r Overall,fig.height = 4,fig.width = 10,echo = FALSE}
@@ -63,12 +64,7 @@ We need to see what has to to an increase in the cases of Heroin & Methamphetami
 2. The demographics of the consumption might have changed over time.
 3. The expenses required for the hospital might have increased for alcohol and cocaine and people due to report it except in cases of emergency.
 
-```{r echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
-
-dataset %>% ggplot() + aes(x = FREQ1, fill = GENDER) + geom_histogram(alpha =0.3, stat = "count",position = "identity") + theme_bw()
-
-```
-
+<br><br>
 ## Does the treatment due to substance abuse vary with region and year?
 
 ```{r Overall_region,fig.height = 8,fig.width = 10,echo = FALSE}
@@ -85,7 +81,7 @@ ggplot(cases_per_year_for_a_region_and_drug) +
  geom_line() +
  scale_fill_hue(direction = 1) + scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
  theme_bw()+ylab("Proportion of cases")+xlab("Year")+ggtitle("Year vs Proportions of admissions for each substance faceted by region")+
-  theme(plot.title = element_text(hjust = 0.5)) + labs(color = "Substance")
+  theme(plot.title = element_text(hjust = 0.5),axis.text.x = element_text(angle = 60, hjust = 1, vjust = .5)) + labs(color = "Substance")
 ```
 Observations:
 
@@ -97,6 +93,7 @@ Observations:
 
 3. Out of all the regions, the West region seems to be performing the best as the trend of all the drugs (including alcohol) seems to be decreasing over the years.
   - What is the difference here? Is it demographics or policies adopted by government? Is it because there is less awareness and people don't get admitted to hospital?
+<br><br><br><br>
 
 ## Which states in the North-east and South are contributing to the increasing trend of admissions due to Heroin Abuse?
 
@@ -134,9 +131,8 @@ cases_per_year_for_a_region_and_state_drug %>%
   filter(SUB1 == 'Heroin') %>% 
   group_by(Year,state) %>% 
   summarise(value = mean(Proportion_of_cases), .groups = 'drop') %>% 
-  ggplot(aes(state = state,fill = value)) + geom_statebins() + facet_wrap(~Year) + theme_bw() + ggtitle("Proportion of admissions for state across time")+ labs(subtitle = 'Substance: Heroin') + theme(axis.text.x = element_blank(),axis.text.y = element_blank(),axis.ticks = element_blank()) + scale_fill_viridis(option="mako" ,name = "Proportion of Admission", direction = -1) + theme(legend.position="top")
+  ggplot(aes(state = state,fill = value)) + geom_statebins() + facet_wrap(~Year) + theme_bw() + ggtitle("Proportion of admissions for state across time")+ labs(subtitle = 'Substance: Heroin') + theme(axis.text.x = element_blank(),axis.text.y = element_blank(),axis.ticks = element_blank()) + scale_fill_viridis(option="mako" ,name = "Proportion of Admission", direction = -1) + theme(legend.position="top",legend.key.width = unit(2.0, "cm"),legend.key.height = unit(1.0, "cm"), legend.key.size = unit(0.8, "cm")) 
 
-  
 ```
 Observations:
 
@@ -148,6 +144,7 @@ Observations:
 
   - Are all these trends recent or the increase has been steady?
 
+<br><br><br><br>
 
 ## Is the increasing trend of heroin admission recent or has it consistently increased over the years for the concerning states?
 
@@ -165,16 +162,17 @@ cases_per_year_for_a_region_and_state_drug <-
 ggplot(data = cases_per_year_for_a_region_and_state_drug[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'),],mapping = aes(x = ADMYR, y = Proportion_of_cases)) +
   geom_line(mapping = aes(group = STFIPS), alpha = 0.5) + 
   geom_smooth(formula = y ~ x, method = "loess",mapping = aes(group = REGION),se = FALSE) + 
-  geom_text_repel(data =subset(cases_per_year_for_a_region_and_state_drug[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'),],ADMYR == '2019'),mapping = aes(x = ADMYR, y = Proportion_of_cases, label = abbrev),size = 3, segment.color = NA, nudge_x = 30) + facet_wrap(~REGION, nrow  = 3) + theme_bw() + ylab("Proportion of cases")+xlab("Year")+ggtitle("Year vs Proportions of admissions for each state faceted by region") + labs(subtitle = 'Substance: Heroin')
+  geom_text_repel(data =subset(cases_per_year_for_a_region_and_state_drug[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'),],ADMYR == '2019'),mapping = aes(x = ADMYR, y = Proportion_of_cases, label = abbrev),size = 3, segment.color = NA, nudge_x = 30) + facet_wrap(~REGION, nrow  = 3) + theme_bw() + ylab("Proportion of cases")+xlab("Year")+ggtitle("Year vs Proportions of admissions for each state faceted by region") + labs(subtitle = 'Substance: Heroin') + theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = .5))
 ```
 
 As the unnatural spikes in the trend of Maryland and Delaware, we might not be able to decipher trends in other states. So removing Maryland and Delware (outliers) to understand the trends better.
 
 ```{r steady_graph1, fig.height = 10,fig.width = 10,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
-ggplot(data = cases_per_year_for_a_region_and_state_drug[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'),],mapping = aes(x = ADMYR, y = Proportion_of_cases)) +
+cases_per_year_for_a_region_and_state_drug_filtered <- cases_per_year_for_a_region_and_state_drug %>% filter(abbrev != 'MD')%>% filter(abbrev != 'DE')
+ggplot(data = cases_per_year_for_a_region_and_state_drug_filtered[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'),],mapping = aes(x = ADMYR, y = Proportion_of_cases)) +
   geom_line(mapping = aes(group = STFIPS), alpha = 0.5) + 
   geom_smooth(formula = y ~ x, method = "loess",mapping = aes(group = REGION),se = FALSE) + 
-  geom_text_repel(data =subset(cases_per_year_for_a_region_and_state_drug[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'),],ADMYR == '2019'),mapping = aes(x = ADMYR, y = Proportion_of_cases, label = abbrev),size = 3, segment.color = NA, nudge_x = 30) + facet_wrap(~REGION, nrow  = 3) + theme_bw() + ylab("Proportion of cases")+xlab("Year")+ggtitle("Year vs Proportions of admissions for each state faceted by region") + labs(subtitle = 'Substance: Heroin')
+  geom_text_repel(data =subset(cases_per_year_for_a_region_and_state_drug_filtered[which(cases_per_year_for_a_region_and_state_drug$SUB1 == 'Heroin'),],ADMYR == '2019'),mapping = aes(x = ADMYR, y = Proportion_of_cases, label = abbrev),size = 3, segment.color = NA, nudge_x = 30) + facet_wrap(~REGION, nrow  = 3) + theme_bw() + ylab("Proportion of cases")+xlab("Year")+ggtitle("Year vs Proportions of admissions for each state faceted by region") + labs(subtitle = 'Substance: Heroin') + theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = .5))
 ```
 Observations:
 
@@ -189,20 +187,11 @@ Observations:
 4. In the midwest the state of Michigan has been steadly increasing over time while in the west the state of Colorado sees a steady increase.
   - Are the state governments of these respective states taking adequate steps to mitigate this trend?
 
-##
-
-```{r fig.height=8, fig.width=6,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
-
-dataset %>% ggplot() + aes(x = SERVICES, fill = SUB1)+ geom_histogram(alpha =0.3,
-                 stat = "count",
-                 position = "dodge") + theme_bw() + theme(axis.text.x = element_text(angle = 60, vjust = 0.5), plot.title = element_text(hjust = 0.5, size = 10)
-                 ) + facet_wrap(~ REGION)
-
-```
+<br><br>
 
 ## Does gender play a role in admission due to heroin abuse in the South region?
 
-```{r gender,fig.height = 6,fig.width = 10,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
+```{r gender,fig.height = 8,fig.width = 10,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
 options(dplyr.summarise.inform = FALSE)
 cases_per_year_for_a_region_and_state_and_gender_drug <-
   dataset %>% group_by(ADMYR, SUB1, REGION, STFIPS, GENDER) %>% summarise(Total_cases = sum(`count`))
@@ -229,21 +218,22 @@ ggplot(
   df_filtered_cases_per_year_for_a_region_and_state_and_gender_drug,
   aes(x = STFIPS , y = Proportion_of_cases, fill = GENDER)) + geom_bar(stat = "identity",
              width = .6,
-             position = "dodge")   +coord_flip() +  theme_bw() + facet_wrap( ~ ADMYR) + ylab("States")+xlab("Proportion of cases")+ggtitle("Proportion of admission for each gender and sate facted by years") + labs(subtitle = 'Substance: Heroin') + theme(legend.position="top")
+             position = "dodge")   +coord_flip() +  theme_bw() + facet_wrap( ~ ADMYR) + ylab("Proportion of cases")+xlab("States")+ggtitle("Proportion of admission for each gender and sate facted by years") + labs(subtitle = 'Substance: Heroin') + theme(legend.position="top")
 
 ```
 Observations:
 
-1. We had already identified that Maryland and Delaware show an unusual steap increase in the admission of Heroin abuse patients. Here, we see that the male and female do not increase in proportion over the years. 
-2. Both Maryland and Delaware see a sharp increase over the years. But in case of Maryland,the proportion of admission increased for both males and females from 2016 to 2017 but from 2017 to 2018 the increase is male admissions is much more.
-  - Why is this happening?
-  - Is tis a data anomaly?
+1. We had already identified that Maryland and Delaware show an unusual steap increase in the admission of Heroin abuse patients. Here, we see that the male and female do not increase in proportion over the years.
 
+2. Both Maryland and Delaware see a sharp increase over the years. But in case of Maryland,the proportion of admission increased for both males and females from 2016 to 2017 but from 2017 to 2018 the increase is male admissions is much more.
+  - Is there any underline reason behind this or is it a data anomaly?
+  
 3. For Delaware, both females and males seem to be increasing in the same proportion.
 
 4. For all the other states, there is no shift in the proportion of male and female admissions over the years.
 
 
+<br><br><br>
 
 ## Does age play a role in admission due to heroin abuse in the South region?
 
@@ -285,11 +275,12 @@ Observations:
   - Why is there such a trend? Is it because the people who have retired are consuming more drugs?
 
 2. There is no other apparent insight for other state and they all seem to behave similarly in terms of age group and admissions.
+<br><br><br><br>
 
 ## Does employment play a role in admission due to Substance abuse?
 
 
-```{r fig.height = 6,fig.width = 9}
+```{r fig.height = 8,fig.width = 9}
 
 options(dplyr.summarise.inform = FALSE)
 
@@ -305,7 +296,7 @@ tmpds2 <- tmpds %>% filter(STFIPS %in% c("District of Columbia","Colorado","Dela
 
 
 
-ggplot(data = tmpds2 %>% filter(EMPLOY != 'Missing')) + geom_mosaic(aes(x=product(STFIPS,SUB1), fill = EMPLOY), divider=ddecker()) + scale_alpha_manual(values =c(.7,.9)) + theme(axis.text=element_text(size=12),axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5),plot.title = element_text(hjust = 0.5,size=20), strip.text = element_text(size=13), legend.key.width = unit(2.5, "cm"),legend.key.height = unit(1.5, "cm"), legend.key.size = unit(0.8, "cm")) + labs(title="Substance and States vs Employment status") + ylab("Employment Status")+xlab("States & substance") + theme_hc() +  theme(legend.position="right") + guides(fill = guide_legend(reverse = TRUE,title="Employment Status"))
+ggplot(data = tmpds2 %>% filter(EMPLOY != 'Missing')) + geom_mosaic(aes(x=product(STFIPS,SUB1), fill = EMPLOY), divider=ddecker()) + scale_alpha_manual(values =c(.7,.9)) + theme(axis.text=element_text(size=12),axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5),plot.title = element_text(hjust = 0.5), strip.text = element_text(size=13)) + labs(title="Substance and States vs Employment status") + ylab("Employment Status")+xlab("States & substance") + theme_hc() +  theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = .5), legend.position="right") + guides(fill = guide_legend(reverse = TRUE,title="Employment Status"))
 ```
 We picked "District of Columbia","Colorado","Delaware" and "Maryland" beacuse District of Columbia","Delaware" and "Maryland" are concerning areas with increasing Heroin trends.
 
@@ -315,10 +306,11 @@ Observations:
 2. Retired people and unemployed people in the District of Columbia are consuming more drugs (including Heroin) as compared to other states with the same popualtion (Retired and unemployed).
 3. More unemployed people in Colorado are getting admitted due to Cocaine and Heroin as compared to other states with the same population (Unemployed).
 
+<br><br><br><br>
 
 ## Does race play a role in the admission due to heroin abuse in the South region?
 
-```{r race,fig.height = 4,fig.width = 8,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
+```{r race,fig.height = 10,fig.width = 10,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
 cases_per_year_for_a_region_and_state_and_gender_race_drug <-
   dataset %>% group_by(ADMYR, SUB1, REGION, STFIPS, GENDER, RACE) %>% summarise(Total_cases = sum(`count`))
 
@@ -366,11 +358,11 @@ gg <-
   gg + theme(
     axis.text = element_text(size = 12),
     axis.text.x = element_text(angle = 60, vjust = 0.5),
-    plot.title = element_text(hjust = 0.5, size = 20),
-    strip.text = element_text(size = 13),
-    legend.key.width = unit(2.5, "cm"),
-    legend.key.height = unit(1.5, "cm"),
-    legend.key.size = unit(0.8, "cm")
+    plot.title = element_text(hjust = 0.5),
+    strip.text = element_text(size = 11),
+    legend.key.width = unit(1.2, "cm"),
+    legend.key.height = unit(0.8, "cm"),
+    legend.key.size = unit(0.5, "cm")
   )
 
 gg 
@@ -382,18 +374,3 @@ Obseravtions:
 2. The admission of white population due to Heroin have increased in both Delaware and Maryland.
 
 3. For district of Columbia, there is an increase in the admission of only Black population.
-
-
-```{r fig.height = 10,fig.width = 10,echo=FALSE,warning=FALSE,message=FALSE,error=FALSE, results='hide',fig.keep='all'}
-dataset_sub_filtered_edu_employ <- dataset %>% group_by(ADMYR,AGE,SUB1,REGION,STFIPS,GENDER,RACE,EDUC,EMPLOY) %>% summarise(Total_cases = sum(`count`))
-
-population_grouped_data <- final_population_data %>% group_by(ADMYR,REGION,STFIPS,GENDER,RACE) %>% summarise(Total_population = sum(`Population_count`))
-
-tmpds <- merge(dataset_sub_filtered_edu_employ,population_grouped_data,by=c("ADMYR","REGION","STFIPS","GENDER","RACE"),all.x=TRUE)
-
-dataset_sub_filtered_edu_employ$Proportion_of_cases <- dataset_sub_filtered_edu_employ$Total_cases/tmpds$Total_population
-
-ggplot(data = dataset_sub_filtered_edu_employ) + geom_mosaic(aes(x=product(SUB1,EDUC), fill = AGE), divider=ddecker()) + scale_alpha_manual(values =c(.7,.9)) + ggtitle("Impact of Education and Age on the Drugs") + theme(axis.text=element_text(size=12),axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5),plot.title = element_text(hjust = 0.5,size=20), strip.text = element_text(size=13), legend.key.width = unit(2.5, "cm"),legend.key.height = unit(1.5, "cm"), legend.key.size = unit(0.8, "cm")) + theme_hc()
-
-
-```

@@ -2,7 +2,7 @@
 
 ## Number of missing attributes
 
-As we had a lot of data initially ~37M rows, we removed rows from each categorical variable, that were less in percentage. For more details, see the data transformation section [here](url). The following visualization gives information about missing data after the transformation:
+As we had a lot of data initially ~37M rows, we removed rows from each categorical variable, that were less in percentage. For more details, see the data transformation section [here](https://maheshjindal.github.io/us_drug_abuse_analytics/data-transformation.html). The following visualization gives information about missing data after the transformation:
 
 ```{r missing_value_load_imports, echo = FALSE}
 library("rjson")
@@ -23,6 +23,7 @@ library(ggthemes)
 library(gganimate)
 library(ggmosaic)
 library(scales)
+library(patchwork)
 load("data/tedsa_puf_2000_2019.RData")
 
 ```
