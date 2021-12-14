@@ -1,0 +1,188 @@
+/**
+ LINE GRAPH CONFIGURATION
+**/
+
+.Alcohol {
+	fill: none;
+	stroke: #f56e80;
+	stroke-width: 2px;
+}
+
+.Heroin {
+	fill: none;
+	stroke: rgb(108, 247, 143);
+	stroke-width: 2px;
+}
+
+.Methamphetamine {
+	fill: none;
+	stroke: rgb(22, 55, 143);
+	stroke-width: 2px;
+}
+
+.Marijuana {
+	fill: none;
+	stroke: rgb(109, 23, 111);
+	stroke-width: 2px;
+}
+
+.Cocaine {
+	fill: none;
+	stroke: rgb(234, 155, 143);
+	stroke-width: 2px;
+}
+
+h3 {
+	font-family: 'Roboto', 'Times New Roman', Times, serif;
+	color: rgb(22, 55, 143);
+	text-transform: uppercase;
+}
+
+
+/**
+ SELECT BOX
+**/
+
+.select {
+	width: 100%;
+	min-width: 15ch;
+	max-width: 30ch;
+	border: 1px solid var(--select-border);
+	border-radius: 0.25em;
+	padding: 0.25em 0.5em;
+	cursor: pointer;
+	background-color: #fefefe;
+	background-image: linear-gradient(to top, #f3efef, #fff 33%);
+	font-family: 'Roboto', 'Times New Roman';
+	border: 0.3px solid gainsboro;
+}
+
+.option_label {
+	font-family: 'Roboto', 'Times New Roman', Times, serif;
+	font-weight: 400;
+}
+
+
+/* AXES */
+
+
+/* ticks */
+
+.axis line {
+	stroke: #706f6f;
+	stroke-width: 0.5;
+	shape-rendering: crispEdges;
+}
+
+
+/* axis contour */
+
+.axis path {
+	stroke: #706f6f;
+	stroke-width: 0.7;
+	shape-rendering: crispEdges;
+}
+
+
+/* axis text */
+
+.axis text {
+	fill: #999DA0;
+	font-family: Georgia;
+	font-size: 120%;
+}
+
+
+/* LINE CHART */
+
+path {
+	fill: none;
+	stroke: #999DA0;
+}
+
+
+/**
+ SVG
+**/
+
+svg {
+	background-color: #f5f5f5;
+	margin: 20px 10px;
+}
+
+.state {
+	fill: none;
+	stroke: #a9a9a9;
+	stroke-width: 1;
+}
+
+.state:hover {
+	fill-opacity: 0.5;
+}
+
+
+/**
+ TOOLTIP
+**/
+
+#tooltip {
+	position: absolute;
+	text-align: center;
+	padding: 20px;
+	margin: 10px;
+	font: 12px sans-serif;
+	background: lightsteelblue;
+	border: 1px;
+	border-radius: 2px;
+	pointer-events: none;
+}
+
+#tooltip h4 {
+	margin: 0;
+	font-size: 14px;
+}
+
+#tooltip {
+	background: rgba(0, 0, 0, 0.7);
+	border: 1px solid grey;
+	border-radius: 5px;
+	font-size: 10px;
+	width: auto;
+	padding: 4px;
+	color: white;
+	opacity: 0;
+	font-family: 'Roboto', 'Times New Roman', Times, serif;
+}
+
+#tooltip table {
+	table-layout: fixed;
+	font-size: 9px;
+}
+
+#tooltip tr td {
+	padding: 0;
+	margin: 0;
+	color: #fff;
+}
+
+#tooltip tr td:nth-child(1) {
+	width: 50px;
+}
+
+#tooltip tr td:nth-child(2) {
+	text-align: center;
+}
+
+.instructions {
+	font-family: 'Roboto', 'Times New Roman', Times, serif;
+	color: #333333;
+	font-weight: 400;
+	font-size: 1em;
+}
+label.instruction-heading{
+	text-transform: uppercase;
+	font-weight: 500;
+}
+label.instruction-data{
+	font-family: Georgia, 'Times New Roman', Times, serif;
+}
