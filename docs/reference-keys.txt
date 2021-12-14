@@ -11,6 +11,7 @@ number-of-missing-attributes
 understanding-missing-values-pattern
 results
 does-the-admissions-due-to-different-substance-vary-with-time
+does-the-treatment-due-to-substance-abuse-vary-with-region-and-year
 which-states-in-the-north-east-and-south-are-contributing-to-the-increasing-trend-of-admissions-due-to-heroin-abuse
 is-the-increasing-trend-of-heroin-admission-recent-or-has-it-consistently-increased-over-the-years-for-the-concerning-states
 does-gender-play-a-role-in-admission-due-to-heroin-abuse-in-the-south-region
