@@ -1,0 +1,32 @@
+{
+    "SEX": {
+        "0": "Total",
+        "1": "Male",
+        "2": "Female"
+    },
+    "RACE": {
+        "1": "White",
+        "2": "Black or African American",
+        "3": "American Indian or Alaska Native Alone",
+        "4": "Asian",
+        "5": "Native Hawaiian or Other Pacific Islander",
+        "6": "Two or more races"
+    },
+    "REGION": {
+        "1": "Northeast",
+        "2": "Midwest",
+        "3": "South",
+        "4": "West"
+    },
+    "DIVISION": {
+        "1": "New England",
+        "2": "Middle Atlantic",
+        "3": "East North Central",
+        "4": "West North Central",
+        "5": "South Atlantic",
+        "6": "East South Central",
+        "7": "West South Central",
+        "8": "Mountain",
+        "9": "Pacific"
+    }
+}
